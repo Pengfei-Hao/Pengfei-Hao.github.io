@@ -81,7 +81,8 @@ div.lazy {
 
 .my-navbar-color a,
 .my-navbar-color .navbar-brand,
-.my-navbar-color .nav-link {
+.my-navbar-color .nav-link,
+.my-navbar-color .navbar-toggler {
     color: #F7F9F9;
 }
 
