@@ -1,0 +1,12 @@
+homepage:
+  show_experience: true
+  show_news: true
+  show_selected_publications: false
+  show_contact: true
+  num_news: 10
+
+width: xl
+mobile_width: md
+
+footer_text: >-
+  &copy; 2025 Pengfei Hao. All Rights Reserved.
