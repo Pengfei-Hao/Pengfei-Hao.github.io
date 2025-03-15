@@ -1,14 +1,72 @@
 @charset "utf-8";
+
+:root {
+    --primary: #1E88E5;       /* 主题蓝 (标题/强调) */
+    --secondary: #90CAF9;    /* 辅助蓝 (图标/边框) */
+    --background: #535557;   /* 背景白蓝 */
+    
+    --a-color: #2196F3;
+    --a-hover: #1976D2;
+
+    --card-color: #FFFFFF;
+
+    --font-color: #2C3E50;
+    --background-color: #FAFBFC;
+
+    --ico-color: #1E88E5;
+
+    --shadow-color: rgba(0, 0, 0, 0.1);   /* 导航栏边框 */
+
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+
+        --a-color: #64B5F6;
+        --a-hover: #1976D2;
+
+      --card-color: #1E1E1E;
+
+      --font-color: #E0E0E0;
+      --background-color: #121212;
+
+      --shadow-color: rgba(117, 117, 117, 0.1);
+    }
+  }
+
+
+  .ico-color {
+    /* color: #1E88E5 */
+    color: var(--ico-color);
+}
+
+
 body {
     font-family: "Lato", sans-serif;
     font-weight: 400;
     padding-top: 5.0rem;
-    color: #2C3E50;
-    background-color: #FAFBFC;
+    color: var(--font-color);
+    background-color: var(--background-color);
 }
 
-a, a:hover, a:active, a:visited, a:focus {
-    color: #1EBC9C
+.my-figure {
+    border-radius: 16px;
+}
+.my-card {
+    background-color: var(--card-color);
+    border-radius: 20px;
+    box-shadow: 4px 4px 24px var(--shadow-color);
+}
+
+a {
+    color: var(--a-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+a:hover {
+    color: var(--a-hover); 
+    text-decoration: none;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -23,10 +81,6 @@ h1, h2, h3, h4, h5, h6,
 .text-profile-bio {
     /* font-family: "Raleway"; */
     font-weight: 400;
-}
-
-.navbar {
-    opacity: 0.95;
 }
 
 .inline-badge {
@@ -74,18 +128,3 @@ div.lazy {
 }
 
 #map { height: 300px; width: 100%; }
-
-.my-navbar-color {
-    background-color: #055C50
-}
-
-.my-navbar-color a,
-.my-navbar-color .navbar-brand,
-.my-navbar-color .nav-link,
-.my-navbar-color .navbar-toggler {
-    color: #F7F9F9;
-}
-
-.ico-color {
-    color: #16A085
-}

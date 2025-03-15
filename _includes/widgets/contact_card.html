@@ -1,23 +1,27 @@
-<div class="card border-0 shadow-sm bg-white mt-3">
+<div class="card border-0 my-card mt-4 mx-2">
     <div class="card-body p-4">
-        <div class="mb-2">
-            <h5 class="mx-2 mt-1 pb-2 mb-0 border-bottom border-gray"><i class="fa fa-address-book ico-color"></i> Contact</h5>
-            <div class="row mx-1 my-1">
-                <div class="col-12 col-{{ site.data.display.mobile_width }}-6 order-{{ site.data.display.mobile_width }}-2 w-50">
-                    <ul class="list-unstyled mb-0">
+        <div class="p-2">
+            <div class="mb-2">
+                <h4 class="mx-2 mt-1 pb-2 mb-2 border-bottom border-gray"><i class="fa fa-address-book ico-color"></i>
+                    Contact</h4>
+                <div class="row mx-1 my-1">
+                    <div
+                        class="col-12 col-{{ site.data.display.mobile_width }}-6 order-{{ site.data.display.mobile_width }}-2 w-50">
+                        <ul class="list-unstyled mb-0">
 
-                        <li class="my-1"><i class="fa fa-envelope ico-color"></i> <strong>Email:</strong> {{
-                            site.data.profile.email }}
-                        </li>
-                        <li class="my-1"><i class="fa fa-map-marker-alt ico-color"></i> <strong>Address:</strong> {{
-                            site.data.profile.address }}</li>
-                    </ul>
-                </div>
-                <div class="col-12 col-{{ site.data.display.mobile_width }}-6 order-{{ site.data.display.mobile_width }}-1 my-2">
-                    <div id="map"></div>
+                            <li class="my-1"><i class="fa fa-envelope ico-color"></i> <strong>Email:</strong> {{
+                                site.data.profile.email }}
+                            </li>
+                            <li class="my-1"><i class="fa fa-map-marker-alt ico-color"></i> <strong>Address:</strong> {{
+                                site.data.profile.address }}</li>
+                        </ul>
+                    </div>
+                    <div
+                        class="col-12 col-{{ site.data.display.mobile_width }}-6 order-{{ site.data.display.mobile_width }}-1 my-2">
+                        <div id="map"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>

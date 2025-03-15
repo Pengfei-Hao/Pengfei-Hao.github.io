@@ -1,0 +1,86 @@
+/* .navbar {
+    background-color: #F7F9F9
+} */
+
+:root {
+    --nav-bar: #FAFBFCcf;      /* 导航栏背景 */
+    --nav-link: #212121;     /* 导航链接 */
+    --nav-link-hover: #212121; /* 悬停效果 */
+    --nav-border: rgba(0, 0, 0, 0.1);   /* 导航栏边框 */
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --nav-bar: #121212cf;    
+      --nav-link: #E0E0E0;
+      --nav-link-hover: #E0E0E0;
+      --nav-border: rgba(255, 255, 255, 0.1);   /* 导航栏边框 */
+    }
+  }
+
+.navbar a,
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .navbar-toggler {
+    color: var(--nav-link);
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+}
+
+.navbar .navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar .nav-link,
+.navbar .navbar-toggler {
+    font-size: 1.1rem;
+}
+
+.glass-navbar {
+    background: var(--nav-bar) !important;
+    
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); */
+    transition: all 0.3s ease;
+}
+
+.glass-navbar.scrolled {
+    box-shadow: 0 1px 0 0 var(--nav-border);
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+
+@supports not (backdrop-filter: blur(10px)) {
+    .glass-navbar {
+        background: var(--nav-bar) !important;
+    }
+}
+
+.nav-link {
+    color: var(--nav-link) !important;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--nav-link-hover) !important;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    left: 0%;
+    width: 0;
+    height: 2px;
+    background: var(--nav-link-hover);
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
