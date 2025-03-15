@@ -1,11 +1,6 @@
 
 var pos;
 var map;
-function fetchWithTimeout(url, timeout) {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout);
-    return fetch(url, { signal: controller.signal, mode: 'no-cors' }).finally(() => clearTimeout(timeoutId));
-}
 
 function initMap(altMap = false) {
     if (altMap) {
@@ -31,19 +26,35 @@ function initMap(altMap = false) {
     var marker = L.marker(pos).addTo(map);
 }
 
-initMap(true);
-var timeout = 1000;
-// fetchWithTimeout('https://www.google.com/', timeout)
-//     .then(response => {
-//         if (response.ok) {
-//             initMap();
-//             console.log("ok")
-//         } else {
-//             initMap(true);
-//             console.log("err", response)
-//         }
-//     })
-//     .catch(error => {
-//         initMap(true);
-//         console.log("err2")
-//     });     
+function checkLocationInCN() {
+    const timeout = 2000;
+    var inited = false;
+    const timeoutId = setTimeout(() => {initMap(true); inited = true}, timeout);
+
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            if(inited) {
+                return;
+            }
+            console.log(data);
+            clearTimeout(timeoutId);
+            if(data.country === 'CN') {
+                initMap(true);
+            } else {
+                initMap(false);
+            }
+        })
+        .catch(() => {
+            if(inited) {
+                return;
+            }
+            clearTimeout(timeoutId);
+            initMap(false);
+        });
+}
+
+window.addEventListener('load', function() { 
+    checkLocationInCN();
+})
+
