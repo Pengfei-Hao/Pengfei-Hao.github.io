@@ -1,6 +1,6 @@
 # Pengfei-Hao.github.io
 
-This is the source code of my personal website [Pengfei-Hao](pengfei-hao.github.io). This website is based on [Jekyll](https://jekyllrb.com), and it also uses the template [Academic Pages](https://github.com/academicpages/academicpages.github.io).
+This is the source code of my personal website [Pengfei Hao](https://pengfei-hao.github.io). This website is based on [Jekyll](https://jekyllrb.com), and it also uses the template [Academic Pages](https://github.com/academicpages/academicpages.github.io).
 
 ## Installation
 

@@ -127,4 +127,4 @@ div.lazy {
     font-family: Courier, monospace;
 }
 
-#map { height: 300px; width: 100%; }
+#map { height: 300px; width: 100%; border-radius: 16px }
