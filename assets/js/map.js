@@ -24,7 +24,7 @@ function initMap(altMap = false) {
     }
     else {
         pos = [39.96, 116.36];
-        map = Lmap.map('map').setView(pos, 15);
+        map = Lmap.setView(pos, 15);
         // zoom: 0 ~ 19
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             minZoom: 3,
