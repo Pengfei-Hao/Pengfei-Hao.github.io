@@ -3,23 +3,32 @@ var pos;
 var map;
 
 function initMap(altMap = false) {
+    let Lmap;
+    try {
+        Lmap = L.map('map');
+    }
+    catch (e) {
+        return;
+    }
     if (altMap) {
         pos = [39.9615, 116.366];
-        map = L.map('map').setView(pos, 15);
+        map = Lmap.setView(pos, 15);
+        // 3 ~ 18
         L.tileLayer('http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
             subdomains: ['1', '2', '3', '4'],
-            minZoom: 1,
-            maxZoom: 19,
+            minZoom: 3,
+            maxZoom: 18,
             attribution: '&copy; Amap'
 
         }).addTo(map);
     }
     else {
         pos = [39.96, 116.36];
-        map = L.map('map').setView(pos, 15);
+        map = Lmap.map('map').setView(pos, 15);
+        // zoom: 0 ~ 19
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            minZoom: 1,
-            maxZoom: 19,
+            minZoom: 3,
+            maxZoom: 18,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
     }
@@ -27,9 +36,9 @@ function initMap(altMap = false) {
 }
 
 function checkLocationInCN() {
-    const timeout = 2000;
+    const timeout = 500;
     var inited = false;
-    const timeoutId = setTimeout(() => {initMap(true); inited = true}, timeout);
+    const timeoutId = setTimeout(() => {initMap(false); inited = true}, timeout);
 
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
@@ -37,7 +46,6 @@ function checkLocationInCN() {
             if(inited) {
                 return;
             }
-            console.log(data);
             clearTimeout(timeoutId);
             if(data.country === 'CN') {
                 initMap(true);

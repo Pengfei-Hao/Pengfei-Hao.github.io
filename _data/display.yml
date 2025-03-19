@@ -7,6 +7,7 @@ homepage:
 
 width: xl
 mobile_width: md
+list_width: lg
 
 footer_text: >-
   &copy; 2025 Pengfei Hao. All Rights Reserved.

@@ -1,0 +1,61 @@
+---
+layout: default
+title : Blogs
+navbar_title: Blogs
+---
+
+{% assign blogs_by_year = site.blogs | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
+
+<div class="row">
+    <div class="col-12 col-{{ site.data.display.list_width }}-10">
+        <div class="mt-5">
+            {% for year in blogs_by_year %}
+            {% assign num_papers = year.items | size %}
+        
+            <div class="card my-card border-0 mt-4 ml-2 mr-{{ site.data.display.list_width }}-0 mr-2">
+                <div class="card-body p-4">
+                    <div class="p-2">
+                        <div class="mb-2">
+                            <h4 class="mx-2 mt-1 pb-2 mb-2 separate-color" id="year-{{ year.name }}"> <i
+                                    class="fas fa-calendar-alt ico-color"></i>
+                                {{ year.name }}</h4>
+                            <div class="mx-3">
+                                {% for item in year.items %}
+                                {% include widgets/blog_item.html item=item hide_bottom_border=forloop.last
+                                first=forloop.first last=forloop.last %}
+                                <!-- <div class="media py-1 {% if not_first and false -%}border-top separate-color{%- endif %}">
+                                    {% assign not_first = true %}
+                                    <div class="mr-3 muted-color my-1">{{ year.name }}</div>
+                                    <div class="media-body">
+                                        {% for item in year.items %}
+                                        <div class="my-1 d-flex">
+                                            <div>{{ item.title }}</div>
+                                            <div class="ml-auto mt-auto muted-color no-break"><i>{{ item.date | date: "%b %d" }}</i>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div> -->
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-2 d-none d-{{ site.data.display.list_width }}-block">
+        <div id="navbar-year" class="nav flex-column navbar-year">
+            <div class="card my-card border-0 mr-2">
+                <div class="card-body p-4">
+            {% for year in blogs_by_year %}
+            <a class="nav-link d-block" href="#year-{{ year.name }}">{{ year.name }}</a>
+            {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

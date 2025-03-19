@@ -4,18 +4,18 @@
     <div class="card-body p-4">
         <div class="p-2">
             <div class="mb-1">
-                <h4 class="mx-2 mt-1 pb-2 mb-2 border-bottom border-gray"><i class="fas fa-rss ico-color"></i> News</h4>
+                <h4 class="mx-2 mt-1 pb-2 mb-2 separate-color"><i class="fas fa-rss ico-color"></i> News</h4>
 
                 <div class="mx-3">
                     {% for year in news_by_year %}
-                    <div class="media py-1 {% if not_first and false -%}border-top border-gray{%- endif %}">
+                    <div class="media py-1 {% if not_first and false -%}border-top separate-color{%- endif %}">
                         {% assign not_first = true %}
-                        <div class="mr-3 text-muted my-1">{{ year.name }}</div>
+                        <div class="mr-3 muted-color my-1">{{ year.name }}</div>
                         <div class="media-body">
                             {% for item in year.items %}
                             <div class="my-1 d-flex">
                                 <div>{{ item.title }}</div>
-                                <div class="ml-auto mt-auto text-muted no-break"><i>{{ item.date | date: "%b %d" }}</i>
+                                <div class="ml-auto mt-auto muted-color no-break"><i>{{ item.date | date: "%b %d" }}</i>
                                 </div>
                             </div>
                             {% endfor %}

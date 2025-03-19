@@ -17,6 +17,18 @@ baseurl: "" # the subpath of your site, e.g. /blog
 
 # Build settings
 markdown: kramdown
+kramdown:
+  parse_block_html: true
+  math_engine: mathjax   # 或 katex（若使用 KaTeX）
+  enable_math: true
+
+
+pandoc:
+  extensions:
+    - normalize
+    - smart
+    - mathjax
+
 plugins:
   - jekyll-email-protect
 
@@ -37,6 +49,9 @@ exclude:
 # timezone: Asia/Shanghai
 
 collections:
-  - publications
-  - news
-  - showcase
+  publications: {}
+  news: {}
+  showcase: {}
+  blogs:
+    output: true
+    permalink: /blogs/:title/

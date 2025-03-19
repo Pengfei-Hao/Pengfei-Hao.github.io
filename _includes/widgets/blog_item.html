@@ -1,0 +1,42 @@
+{% assign item = include.item %}
+<div class="d-none d-{{ site.data.display.mobile_width }}-block">
+    <div class="d-flex py-2">
+        <div class="" style="flex: 0 0 25%; max-width: 250px; min-width: 200px;">
+            <div class="mr-3 mt-1 mb-0">
+                {%- if item.cover -%}
+                <img data-src="{{ item.cover | relative_url }}" alt="{{ item.title }}" class="lazy w-100 my-figure"
+                    src="{{ '/assets/images/empty_300x200.png' | relative_url }}">
+                {%- else -%}
+                <svg class="bubble-visual-hash lazy w-100 my-figure" data-bubble-visual-hash="{{ item.id }}"
+                    viewBox="0 0 300 200"></svg>
+                {%- endif -%}
+            </div>
+        </div>
+        <div style="flex: 1;">
+            <h5 class="mt-1 mb-0"><a href="{{ item.link | prepend: '/blogs/' | relative_url }}">{{ item.title }}</a></h5>
+            <p class="mt-1 mb-0 mx-2">{% include widgets/author_list.html authors=item.authors %}</p>
+
+            <p class="mt-0 mb-1 mx-1">{{ item.abstract }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="d-{{ site.data.display.mobile_width }}-none">
+    <div class="py-2">
+        <div class="mx-3 mt-1 mb-3">
+            {%- if item.cover -%}
+            <img data-src="{{ item.cover | relative_url }}" alt="{{ item.title }}" class="lazy  my-figure" style=" width: 100%; "
+                src="{{ '/assets/images/empty_300x200.png' | relative_url }}">
+            {%- else -%}
+            <svg class="bubble-visual-hash lazy  my-figure" data-bubble-visual-hash="{{ item.id }}" style=" width: 100%; "
+                viewBox="0 0 300 200"></svg>
+            {%- endif -%}
+        </div>
+        <div>
+            <h5 class="mt-1 mb-0"><a href="{{ item.link | prepend: '/blogs/' | relative_url }}">{{ item.title }}</a></h5>
+            <p class="mt-1 mb-0 mx-2">{% include widgets/author_list.html authors=item.authors %}</p>
+
+            <p class="mt-0 mb-1 mx-1">{{ item.abstract }}</p>
+        </div>
+    </div>
+</div>

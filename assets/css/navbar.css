@@ -3,7 +3,7 @@
 } */
 
 :root {
-    --nav-bar: #FAFBFCcf;      /* 导航栏背景 */
+    --nav-bar: #FAFBFCbf;      /* 导航栏背景 */
     --nav-link: #212121;     /* 导航链接 */
     --nav-link-hover: #212121; /* 悬停效果 */
     --nav-border: rgba(0, 0, 0, 0.1);   /* 导航栏边框 */
@@ -51,6 +51,16 @@
     padding-bottom: 0.5rem !important;
 }
 
+.navbar-year {
+    position: sticky;
+    top: 8rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-year.scrolled {
+    position: sticky;
+    top: 7rem;
+}
 
 @supports not (backdrop-filter: blur(10px)) {
     .glass-navbar {

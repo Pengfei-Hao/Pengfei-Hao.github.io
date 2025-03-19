@@ -23,6 +23,31 @@ This is the source code of my personal website [Pengfei Hao](https://pengfei-hao
 3. Use `bundle install` to install ruby dependencies.
 4. Run `bundle exec jekyll serve` to preview the site on `localhost:4000` (`http://127.0.0.1:4000/`).
 
+**Notice:**
+Inline math equation should be replaced 
+```
+(?<!\$)\$(?!\$)
+```
+with
+```
+$$$$
+```
+moreover, inline equation conflicts with `|` (table). Then replace
+```
+<aside>
+...
+</aside>
+```
+with
+```
+<div class= "d-flex highlight">
+<i class="fas fa-hashtag"></i>
+<div class="side">
+...
+</div>
+</div>
+```
+
 ## License
 
 Copyright (c) Pengfei Hao. All rights reserved.

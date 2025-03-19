@@ -4,6 +4,8 @@
     --primary: #1E88E5;       /* 主题蓝 (标题/强调) */
     --secondary: #90CAF9;    /* 辅助蓝 (图标/边框) */
     --background: #535557;   /* 背景白蓝 */
+
+    --muted-color: #6c757d;
     
     --a-color: #2196F3;
     --a-hover: #1976D2;
@@ -16,11 +18,14 @@
     --ico-color: #1E88E5;
 
     --shadow-color: rgba(0, 0, 0, 0.1);   /* 导航栏边框 */
-
+    --separator-color: #dee2e6;
   }
   
   @media (prefers-color-scheme: dark) {
     :root {
+
+        --muted-color: #6c757d;
+
 
         --a-color: #64B5F6;
         --a-hover: #1976D2;
@@ -31,6 +36,8 @@
       --background-color: #121212;
 
       --shadow-color: rgba(117, 117, 117, 0.1);
+      --separator-color: #383838;
+
     }
   }
 
@@ -42,11 +49,19 @@
 
 
 body {
-    font-family: "Lato", sans-serif;
+    font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-weight: 400;
     padding-top: 5.0rem;
     color: var(--font-color);
     background-color: var(--background-color);
+}
+
+.separate-color {
+    border-bottom: 1px solid var(--separator-color);
+}
+
+.hr-color {
+    border-top: 1px solid var(--separator-color);
 }
 
 .my-figure {
@@ -125,6 +140,10 @@ div.lazy {
 
 .email-text {
     font-family: Courier, monospace;
+}
+
+.muted-color {
+    color: var(--muted-color);
 }
 
 #map { height: 300px; width: 100%; border-radius: 16px }
