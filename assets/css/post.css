@@ -44,6 +44,8 @@
 .post .katex-display>.katex {
     white-space: normal;
     overflow-wrap: break-word;
+    overflow: auto;
+    word-break: break-all;
 }
 
 /* .post figure {
