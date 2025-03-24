@@ -35,7 +35,7 @@ $$
 
 其中 $$\mathcal{X}\subseteq\mathbb{R}^n$$ 是可行集. 仿照在 $$\mathbb{R}$$ 上的情形, 有以下定理:
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -69,7 +69,7 @@ $$
 
 其中 $$f$$ 是连续可微的.
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -86,7 +86,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -101,7 +101,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -116,7 +116,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -143,7 +143,7 @@ $$
 
 其中 $$f$$ 是适当且凸的函数.
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -168,7 +168,7 @@ $$
 
 其中 $$f$$ 是光滑函数 (可能非凸), $$g$$ 是凸函数 (可能非光滑).
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -193,7 +193,7 @@ $$
 
 其中 $$f$$ 是适当的下半连续函数.
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -210,7 +210,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -225,7 +225,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -260,7 +260,7 @@ $$
 
 该问题的 Lagrange 函数定义为
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -277,7 +277,7 @@ $$
 
 由于约束的存在, 并不能保证沿所有的方向前进后, 到达的点仍能够满足约束, 因此我们首先要考虑可行方向. 我们称这样的方向为切方向.
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -300,7 +300,7 @@ $$
 
 在约束优化问题中, 与无约束优化问题类似, 我们同样也要考虑下降方向. 下降方向的定义与无约束优化相同. 
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -325,7 +325,7 @@ $$
 
 由于切锥通常不容易计算, 在这里给出更容易计算的方式, 即线性化可行方向锥.
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -342,7 +342,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -357,7 +357,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -374,7 +374,7 @@ $$
 
 一般来说, 线性化可行方向锥比切锥更大. 为了刻画两者之间的关系, 我们引入约束品性的概念. 大部分的约束品性是为了保证在最优点处有 $$T_\mathcal X(x)=\mathcal F(x).$$
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -391,7 +391,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -410,7 +410,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -421,7 +421,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -458,7 +458,7 @@ $$
 
 由 Farkas 引理, 上式等价于
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -479,7 +479,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -496,7 +496,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -517,7 +517,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -551,7 +551,7 @@ $$
 \mathcal X=\{x\in \mathcal D: c_i(x)\leqslant0, \quad i=1,2,\dots,m; Ax=b\}.
 $$
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -562,7 +562,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
@@ -577,7 +577,7 @@ $$
 </div>
 </div>
 
-<div class= "d-flex highlight">
+<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
 <i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
 <div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
