@@ -22,8 +22,8 @@ layout: post
 罚函数方法将约束问题转化为无约束问题进行求解, 通过将约束函数转化为惩罚项加在目标函数上, 对位于可行域以外的点进行惩罚, 而对可行域以内的点不做惩罚. 以下是几种常见的罚函数:
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 **等式约束的二次罚函数**
@@ -48,8 +48,8 @@ $$
 </div>
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 **一般约束问题的二次罚函数**
@@ -81,8 +81,8 @@ $$
 以上这两种罚函数均为**外点罚函数**, 即求解过程中允许迭代点位于可行域之外, 当罚因子趋向于无穷时, 迭代点列从外部逼近最优解. 而如果想让迭代点列从内部逼近最优解, 则需要**内点罚函数**.
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 **对数罚函数**
@@ -109,8 +109,8 @@ $$
 上面的外点和内点罚函数, 在求解时均需要让罚因子趋于无穷 (或零), 会对数值求解造成一定的困难. 下面介绍的精确罚函数, 当罚因子选取适当 (不是无穷) 时, 就能够得到原问题的最优解. 常用的精确罚函数是 $$l_1$$ 罚函数.
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 $$l_1$$ **罚函数**
@@ -131,8 +131,8 @@ $$
 以等式约束的二次罚函数为例, 其收敛性如下
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 **等式约束的二次罚函数的收敛性**
@@ -175,8 +175,8 @@ $$
 ### 等式约束的优化问题
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 **等式约束的增广拉格朗日函数**
@@ -212,8 +212,8 @@ $$
 $$
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 **最优性**
@@ -224,8 +224,8 @@ $$
 </div>
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 **收敛性**
@@ -262,8 +262,8 @@ s_i\geqslant0,&\quad i\in\mathcal I.\end{aligned}
 $$
 
 <div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
+<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
 
 
 **一般约束优化问题的增广拉格朗日函数**

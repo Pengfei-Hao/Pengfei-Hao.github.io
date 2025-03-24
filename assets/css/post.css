@@ -119,7 +119,7 @@
     padding-left: 0.2em;
 }
 
-.post .highlight {
+/* .post .highlight {
     background-color: var(--bg-color);
     border-radius: 20px;
     padding: 1.3em;
@@ -127,18 +127,27 @@
     padding-top: 0.5em;
     margin-top: 0.7em;
     margin-bottom: 0.7em;
+} */
+
+.post .highlight {
+    background-color: var(--bg-color);
+    border-radius: 20px;
+    padding: 1em;
+    padding-bottom: 1.5em;
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
 }
+
 
 .post .highlight i {
     width: 30px;
     font-size: 1.6rem;
     margin-right: 0.2em;
     margin-left: 0.2em;
-    margin-top: 0.1em;
-    display: none;
+    margin-top: 0em;
 }
 
-@media (min-width: 768px) { /* Bootstrap md 断点 */
+/* @media (min-width: 768px) { 
     .post .highlight i {
       display: flex;
     }
@@ -152,7 +161,7 @@
         flex: 1;
         margin-top: 0.3em;
     }
-}
+} */
 
 .post .highlight .side {
     flex: 1;
