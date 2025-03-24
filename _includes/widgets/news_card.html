@@ -6,7 +6,7 @@
             <div class="mb-1">
                 <h4 class="mx-2 mt-1 pb-2 mb-2 separate-color"><i class="fas fa-rss ico-color"></i> News</h4>
 
-                <div class="mx-3">
+                <div class="mx-{{ site.data.display.mobile_width }}-3 mx-2">
                     {% for year in news_by_year %}
                     <div class="media py-1 {% if not_first and false -%}border-top separate-color{%- endif %}">
                         {% assign not_first = true %}

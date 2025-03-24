@@ -41,6 +41,10 @@
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
+.post .katex-display>.katex {
+    white-space: normal;
+    overflow-wrap: break-word;
+}
 
 /* .post figure {
 	margin: 1.25em 0;

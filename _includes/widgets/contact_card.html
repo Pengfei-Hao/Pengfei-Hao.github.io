@@ -4,10 +4,11 @@
             <div class="mb-2">
                 <h4 class="mx-2 mt-1 pb-2 mb-2 separate-color"><i class="fa fa-address-book ico-color"></i>
                     Contact</h4>
-                <div class="row mx-1 my-1">
+                <div class="row my-1">
+                    
                     <div
-                        class="col-12 col-{{ site.data.display.mobile_width }}-6 order-{{ site.data.display.mobile_width }}-2 w-50">
-                        <ul class="list-unstyled mb-0">
+                        class="col-{{ site.data.display.mobile_width }}-6 order-{{ site.data.display.mobile_width }}-2">
+                        <ul class="list-unstyled mb-0 mx-2 ml-{{ site.data.display.mobile_width }}-1 mr-{{ site.data.display.mobile_width }}-3">
 
                             <li class="my-1"><i class="fa fa-envelope ico-color"></i> <strong>Email:</strong> {{
                                 site.data.profile.email }}
@@ -17,9 +18,12 @@
                         </ul>
                     </div>
                     <div
-                        class="col-12 col-{{ site.data.display.mobile_width }}-6 order-{{ site.data.display.mobile_width }}-1 my-2">
+                        class="col-{{ site.data.display.mobile_width }}-6 order-{{ site.data.display.mobile_width }}-1 my-2">
+                        <div class="mx-2 ml-{{ site.data.display.mobile_width }}-3 mr-{{ site.data.display.mobile_width }}-1">
                         <div id="map"></div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

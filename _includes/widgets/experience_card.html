@@ -7,7 +7,7 @@
                     <h4 class="mx-2 mt-1 pb-2 mb-2 separate-color"><i
                             class="fa fa-mortar-board ico-color"></i> Education
                     </h4>
-                    <div class="ml-2 mr-3 my-1">
+                    <div class="ml-{{ site.data.display.mobile_width }}-2 mr-{{ site.data.display.mobile_width }}-3 ml-1 mr-2 my-1">
                         <ul class="list-unstyled mb-0">
                             {% for item in site.data.profile.education %}
                             <li class="media">
@@ -58,7 +58,7 @@
                     <h4 class="mx-2 mt-1 pb-2 mb-2 separate-color"><i class="fa fa-medal ico-color"></i>
                         Selected Awards
                     </h4>
-                    <div class="mx-3 pl-2 my-1">
+                    <div class="mx-{{ site.data.display.mobile_width }}-3 mx-2 pl-2 my-1">
                         <ul class="list mb-0 pl-2">
                             {% for item in site.data.profile.awards %}
                             <li>
