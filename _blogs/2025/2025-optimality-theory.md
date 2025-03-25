@@ -35,9 +35,7 @@ $$
 
 其中 $$\mathcal{X}\subseteq\mathbb{R}^n$$ 是可行集. 仿照在 $$\mathbb{R}$$ 上的情形, 有以下定理:
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **Weierstrass 定理**
 
@@ -54,8 +52,7 @@ $$
 
 则上述问题的最优解集是非空且紧的.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ## 无约束优化问题的最优性条件
 
@@ -69,9 +66,7 @@ $$
 
 其中 $$f$$ 是连续可微的.
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **下降方向**
 
@@ -83,12 +78,9 @@ $$
 
 则 $$d$$ 称为 $$f$$ 在点 $$x$$ 处的一个下降方向.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **一阶必要条件**
 
@@ -98,12 +90,9 @@ $$
 \nabla f(x^*)=0.
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **二阶必要条件**
 
@@ -113,12 +102,9 @@ $$
 \nabla f(x^*)=0,\quad\nabla^2 f(x^*) \succeq0.
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **二阶充分条件**
 
@@ -130,8 +116,7 @@ $$
 
  则 $$x^*$$ 是 $$f$$ 的一个局部极小点.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ### 凸问题
 
@@ -143,9 +128,7 @@ $$
 
 其中 $$f$$ 是适当且凸的函数.
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **一阶充要条件**
 
@@ -155,8 +138,7 @@ $$
 0\in\partial f(x^*).
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ### 复合优化问题
 
@@ -168,9 +150,7 @@ $$
 
 其中 $$f$$ 是光滑函数 (可能非凸), $$g$$ 是凸函数 (可能非光滑).
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **一阶必要条件**
 
@@ -180,8 +160,7 @@ $$
 -\nabla f(x^*)\in\partial g(x^*).
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ### 非光滑非凸问题
 
@@ -193,9 +172,7 @@ $$
 
 其中 $$f$$ 是适当的下半连续函数.
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **Fréchet 次微分**
 
@@ -207,12 +184,9 @@ $$
 
 记为 $$\hat\partial f(x)$$; 如果  $$x\notin\text{dom}f$$, 定义 $$\hat\partial f(x)=\varnothing$$.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **次微分**
 
@@ -222,12 +196,9 @@ $$
 \partial f(x)=\{u\in\mathbb{R}^n:\exists x^k\to x, f(x^k)\to f(x),u^k\in\hat\partial f(x^k)\to u\}.
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **一阶必要条件**
 
@@ -237,8 +208,7 @@ $$
 0\in\partial f(x^*).
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ## 约束优化问题的最优性条件
 
@@ -260,9 +230,7 @@ $$
 
 该问题的 Lagrange 函数定义为
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **Lagrange 函数**
 
@@ -272,14 +240,11 @@ $$
 L(x;\lambda,\nu)=f(x)+\sum_{i\in\mathcal I}\lambda_ic_i(x)+\sum_{i\in\mathcal E}\nu_ic_i(x)
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 由于约束的存在, 并不能保证沿所有的方向前进后, 到达的点仍能够满足约束, 因此我们首先要考虑可行方向. 我们称这样的方向为切方向.
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **切锥 (可行方向锥)**
 
@@ -291,8 +256,7 @@ $$
 
 则 $$d$$ 称为 $$\mathcal {X}$$ 在 $$x$$ 处的一个切向量 (可行方向). 点 $$x$$ 处所有的切向量构成的集合称为切锥, 记为 $$T_\mathcal{X}(x)$$.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ### 可微问题的几何最优性条件
 
@@ -300,9 +264,7 @@ $$
 
 在约束优化问题中, 与无约束优化问题类似, 我们同样也要考虑下降方向. 下降方向的定义与无约束优化相同. 
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **一阶必要条件 (几何最优性条件)**
 
@@ -320,14 +282,11 @@ $$
 
 也就是说, 可行方向与下降方向没有交集.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 由于切锥通常不容易计算, 在这里给出更容易计算的方式, 即线性化可行方向锥.
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **积极集**
 
@@ -339,12 +298,9 @@ $$
 
 即所有约束中等式成立的下标的集合.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **线性化可行方向锥**
 
@@ -354,12 +310,9 @@ $$
 \mathcal F(x)=\{d: d^\top\nabla c_i(x)=0,\,i\in\mathcal E\wedge d^\top\nabla c_i(x)\leqslant0,\, i\in\mathcal A(x)\cap\mathcal I\}.
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **命题**
 
@@ -369,14 +322,11 @@ $$
 T_\mathcal X(x)\subseteq\mathcal F(x).
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 一般来说, 线性化可行方向锥比切锥更大. 为了刻画两者之间的关系, 我们引入约束品性的概念. 大部分的约束品性是为了保证在最优点处有 $$T_\mathcal X(x)=\mathcal F(x).$$
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **线性无关约束品性 (LICQ)**
 
@@ -388,12 +338,9 @@ $$
 
 是线性无关的, 称线性无关约束品性在点 $$x$$ 处成立.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **Mangasarian-Fromovitz 约束品性 (MFCQ)**
 
@@ -407,23 +354,17 @@ $$
 
 并且等式约束的梯度集 $$\nabla c_i(x),\,i\in\mathcal E$$ 是线性无关的, 称 MF 约束品性在点 $$x$$ 处成立.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **线性约束品性**
 
 如果所有的约束函数 $$c_i(x),\, i\in\mathcal I\,\cup\,\mathcal E$$ 都是线性的, 称线性约束品性成立.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **命题**
 
@@ -433,8 +374,7 @@ $$
 T_\mathcal X(x)=\mathcal F(x).
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ### 可微问题的 KKT 条件
 
@@ -458,9 +398,7 @@ $$
 
 由 Farkas 引理, 上式等价于
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **Karush-Kuhn-Tucker (KKT) 条件 (一阶必要条件)**
 
@@ -476,12 +414,10 @@ $$
 - 原始可行性条件: $$c_i(x^*)=0,\,i\in\mathcal E \,\wedge\,c_i(x^*)\leqslant0,\,i\in\mathcal I$$;
 - 对偶可行性条件: $$\lambda^*_i\geqslant0,\, i\in\mathcal I$$;
 - 互补松弛条件: $$\lambda_i^*c_i(x^*)=0, i\in\mathcal I$$.
-</div>
-</div>
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_end.html %}
+
+{% include widgets/highlight_begin.html %}
 
 **临界锥**
 
@@ -493,12 +429,9 @@ $$
 
 即临界锥为等式约束以及满足 $$\lambda^*_i>0$$ 的不等式约束共同确定的方向.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **二阶必要条件**
 
@@ -514,12 +447,9 @@ $$
 \forall d\in\mathcal C(x^*,\lambda^*), \quad d^\top\nabla^2_{xx}L(x^*,\lambda^*)d\geqslant0.
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **二阶充分条件**
 
@@ -531,8 +461,7 @@ $$
 
 则 $$x^*$$ 为上述问题的一个严格局部极小点.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ### 凸优化问题
 
@@ -551,20 +480,15 @@ $$
 \mathcal X=\{x\in \mathcal D: c_i(x)\leqslant0, \quad i=1,2,\dots,m; Ax=b\}.
 $$
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **Slater 约束品性**
 
 对于上述凸优化问题, 如果存在 $$x\in\text{ri}\,\text{dom}f$$, 则称该问题满足 Slater 约束品性.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **强对偶原理**
 
@@ -574,12 +498,9 @@ $$
 p^*=d^*.
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
+{% include widgets/highlight_begin.html %}
 
 **一阶充要条件 (KKT 条件)**
 
@@ -589,8 +510,8 @@ $$
 - 原始可行性条件: $$c_i(x^*)\leqslant0,\,i\in\mathcal I\,\wedge\,Ax^*=b$$;
 - 对偶可行性条件:$$\lambda^*_i\geqslant0,\,i\in\mathcal I$$;
 - 互补约束条件: $$\lambda^*_i c_i(x^*)=0,\,i\in \mathcal I$$.
-</div>
-</div>
+
+{% include widgets/highlight_end.html %}
 
 ### 总结
 

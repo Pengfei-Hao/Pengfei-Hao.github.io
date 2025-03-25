@@ -21,10 +21,7 @@ layout: post
 
 罚函数方法将约束问题转化为无约束问题进行求解, 通过将约束函数转化为惩罚项加在目标函数上, 对位于可行域以外的点进行惩罚, 而对可行域以内的点不做惩罚. 以下是几种常见的罚函数:
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 **等式约束的二次罚函数**
 
@@ -44,13 +41,9 @@ $$
 
 其中右端第二项称为惩罚项, $$\sigma$$ 称为罚因子.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 **一般约束问题的二次罚函数**
 
@@ -75,15 +68,11 @@ $$
 c_i^+(x)=\max\{0, c_i(x)\}.
 $$
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 以上这两种罚函数均为**外点罚函数**, 即求解过程中允许迭代点位于可行域之外, 当罚因子趋向于无穷时, 迭代点列从外部逼近最优解. 而如果想让迭代点列从内部逼近最优解, 则需要**内点罚函数**.
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 **对数罚函数**
 
@@ -103,15 +92,11 @@ $$
 
 其中右端第二项称为惩罚项, $$\sigma$$ 称为罚因子.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 上面的外点和内点罚函数, 在求解时均需要让罚因子趋于无穷 (或零), 会对数值求解造成一定的困难. 下面介绍的精确罚函数, 当罚因子选取适当 (不是无穷) 时, 就能够得到原问题的最优解. 常用的精确罚函数是 $$l_1$$ 罚函数.
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 $$l_1$$ **罚函数**
 
@@ -123,17 +108,13 @@ $$
 
 其中右端第二项称为惩罚项, $$\sigma$$ 称为罚因子.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ### 收敛性
 
 以等式约束的二次罚函数为例, 其收敛性如下
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 **等式约束的二次罚函数的收敛性**
 
@@ -145,8 +126,7 @@ $$
 
 其中 $$\lambda^*_i$$ 是约束 $$c_i(x^*)=0$$ 对应的 Lagrange 乘子.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 上述结论可以通过以下方式直观得到, 写出原问题的 KKT 条件
 
@@ -174,10 +154,7 @@ $$
 
 ### 等式约束的优化问题
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 **等式约束的增广拉格朗日函数**
 
@@ -189,8 +166,7 @@ $$
 
  $$\sigma$$ 为罚因子.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 仿照前文的方式, 写出原问题的 KKT 条件
 
@@ -211,22 +187,15 @@ $$
 \lambda^{k+1}_i=\lambda^k_i+\sigma_k c_i(x^{k+1}),\quad i\in\mathcal E.
 $$
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 **最优性**
 
 设 $$x^*$$, $$\lambda^*$$ 为等式约束优化问题的局部极小点和对应的乘子, 且在 $$x^*$$ 处满足 LICQ 和二阶充分条件. 那么存在一个有限的常数 $$\bar\sigma$$, 使得对于任意的 $$\sigma\geqslant\bar\sigma$$, 有 $$x^*$$ 是 $$L_\sigma(x;\lambda^*)$$ 的严格局部极小点; 反之, 如果 $$x^*$$ 是 $$L_\sigma(x;\lambda^*)$$ 的严格局部极小点, 且 $$c_i(x^*)=0,\,i\in\mathcal E$$, 则 $$x^*$$ 为局部极小点.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 **收敛性**
 
@@ -246,8 +215,7 @@ $$
 
 注意, 此处乘子列的有界性, 罚因子趋于无穷, 迭代点列子列收敛性是可以放宽的.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 ### 一般约束优化问题
 
@@ -261,10 +229,7 @@ c_i(x)+s_i=0,& \quad i\in\mathcal{I},\\
 s_i\geqslant0,&\quad i\in\mathcal I.\end{aligned}
 $$
 
-<div class= "d-{{ site.data.display.mobile_width }}-flex d-block highlight">
-<i class="d-none d-{{ site.data.display.mobile_width }}-block fas fa-hashtag"></i>
-<div class="mx-2 mx-{{ site.data.display.mobile_width }}-0 side">
-
+{% include widgets/highlight_begin.html %}
 
 **一般约束优化问题的增广拉格朗日函数**
 
@@ -276,8 +241,7 @@ $$
 
  $$\sigma$$ 为罚因子.
 
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 
 增广拉格朗日函数可以消去 $$s$$ 变成如下格式
 

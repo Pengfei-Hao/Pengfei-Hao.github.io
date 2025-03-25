@@ -40,12 +40,9 @@ moreover, inline equation conflicts with `|` (table). Then replace
 ```
 with
 ```
-<div class= "d-flex highlight">
-<i class="fas fa-hashtag"></i>
-<div class="side">
+{% include widgets/highlight_begin.html %}
 ...
-</div>
-</div>
+{% include widgets/highlight_end.html %}
 ```
 
 ## License
