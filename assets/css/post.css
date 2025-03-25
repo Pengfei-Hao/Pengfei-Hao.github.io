@@ -45,6 +45,9 @@
     white-space: normal !important;
     overflow-wrap: break-word !important;
     word-break: break-all !important;
+}
+
+.post mjx-container {
     overflow-x: auto;
     overflow-y: hidden;
 }
