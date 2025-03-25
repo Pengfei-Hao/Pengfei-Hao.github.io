@@ -41,12 +41,10 @@
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
-.post .katex-display>.katex {
-    white-space: normal;
-    overflow-wrap: break-word;
-    overflow-x: auto;
-    overflow-y: hidden;
-    word-break: break-all;
+.post mjx-math{
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: break-all !important;
 }
 
 /* .post figure {
