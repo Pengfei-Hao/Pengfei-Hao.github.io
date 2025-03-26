@@ -17,7 +17,7 @@ layout: post
 
 # 约束优化算法
 
-本文主要介绍约束优化问题的优化算法. 无论目标函数是否可微或凸, 都可以使用罚函数方法将约束问题转化为无约束问题进行求解. 对可微问题和凸问题, 也可以使用增广拉格朗日函数法进行求解. 对于凸问题, 也可以使用原始对偶混合梯度法和交替方向乘子法.
+本文主要介绍约束优化问题的优化算法. 无论目标函数是否可微或凸, 都可以使用罚函数方法将约束问题转化为无约束问题进行求解. 对可微问题和凸问题, 也可以使用增广拉格朗日函数法进行求解.  对于等式约束的凸问题, 由于凸问题有较好的对偶性, 也可以使用原始对偶混合梯度法, 对偶近似点梯度法和交替方向乘子法求解.
 
 ## 罚函数法
 
@@ -166,7 +166,7 @@ $$
 L_\sigma(x;\lambda)=f(x)+\sum_{i\in\mathcal E}\lambda_ic_i(x)+\frac12\sigma\sum_{i\in\mathcal E}c_i^2(x),
 $$
 
- $$\sigma$$ 为罚因子.
+ $$\sigma>0$$ 为罚因子.
 
 {% include widgets/highlight_end.html %}
 
@@ -182,12 +182,39 @@ $$
 \nabla_xL_{\sigma_k}(x^{k+1};\lambda^k)=\nabla f(x^{k+1})+\sum_{i\in\mathcal E}(\lambda^k_i+{\sigma_k}c_i(x^{k+1}))\nabla c_i(x^{k+1})\to0,
 $$
 
-得到乘子更新方式
+简记 $$c(x)=(c_1(x),\dots,c_{\vert\mathcal E\vert}(x))^\top$$, 上下两式对比可以得到增广拉格朗日函数法的迭代格式:
+
+{% include widgets/highlight_begin.html %}
+
+**增广拉格朗日函数法**
+
+给定初始点 $$x^0$$, 乘子 $$\lambda^0$$, 罚因子 $$\sigma_0>0$$, 罚因子更新常数 $$\rho>0$$, 约束违反度常数 $$\varepsilon>0$$, 精度 $$\eta_k>0$$, 每一步迭代如下:
+
+- 使用无约束优化算法求解
+    
+    $$
+    x^{k+1}=\argmin_{x}L_{\sigma_k}(x;\lambda^k),
+    $$
+    
+    使得
+    
+    $$
+    \Vert L_{\sigma_k}(x^{k+1};\lambda^k)\Vert\leqslant\eta_k.
+    $$
+    
+- 如果约束违反度 $$\Vert c(x^{k+1})\Vert<\varepsilon$$, 则终止迭代;
+- 更新乘子和罚因子
 
 $$
-
-\lambda^{k+1}_i=\lambda^k_i+\sigma_k c_i(x^{k+1}),\quad i\in\mathcal E.
+\begin{aligned}
+\lambda^{k+1}=&\lambda^k+\sigma_kc(x^{k+1}),\\
+\sigma_{k+1}=&\rho\sigma_k.
+\end{aligned}
 $$
+
+{% include widgets/highlight_end.html %}
+
+下面给出增广拉格朗日函数的收敛性.
 
 {% include widgets/highlight_begin.html %}
 
@@ -221,7 +248,7 @@ $$
 
 ### 一般约束优化问题
 
-首先引入松弛变量, 得到原问题的等价形式
+一般的约束可以通过松弛化为等式约束的问题, 从而转化为等式约束的情况. 首先引入松弛变量, 得到原问题的等价形式
 
 $$
 \begin{aligned}\min f(x),&\quad
@@ -241,14 +268,20 @@ $$
 L_\sigma(x,s;\lambda,\mu)=f(x)+\sum_{i\in\mathcal E}\lambda_ic_i(x)+\sum_{i\in\mathcal I}\mu_i(c_i(x)+s_i)+\frac12\sigma\left[\sum_{i\in\mathcal E}c_i^2(x)+\sum_{i\in\mathcal I}(c_i(x)+s_i)^2\right],\quad s_i\geqslant0, i\in\mathcal I,
 $$
 
- $$\sigma$$ 为罚因子.
+ $$\sigma>0$$ 为罚因子.
 
 {% include widgets/highlight_end.html %}
 
 增广拉格朗日函数可以消去 $$s$$ 变成如下格式
 
 $$
-L_\sigma(x,s;\lambda,\mu)=f(x)+\sum_{i\in\mathcal E}\lambda_ic_i(x)+\frac12\sigma\sum_{i\in\mathcal E}c_i^2(x)+\frac12\sigma\sum_{i\in\mathcal I}\left(\max\left\{\frac{\mu_i}{\sigma}+c_i(x),0\right\}^2-\frac{\mu_i^2}{\sigma^2}\right).
+L_\sigma(x;\lambda,\mu)=f(x)+\sum_{i\in\mathcal E}\lambda_ic_i(x)+\frac12\sigma\sum_{i\in\mathcal E}c_i^2(x)+\frac12\sigma\sum_{i\in\mathcal I}\left(\max\left\{\frac{\mu_i}{\sigma}+c_i(x),0\right\}^2-\frac{\mu_i^2}{\sigma^2}\right),
+$$
+
+此时
+
+$$
+s_i=\max\left\{-\frac{\mu_i}{\sigma},0\right\}, \quad i\in\mathcal I.
 $$
 
 仿照前文的方式, 写出原问题的 KKT 条件
@@ -263,19 +296,217 @@ $$
 \nabla_xL_{\sigma_k}(x^{k+1},s^{k+1};\lambda^k,\mu^k)=\nabla f(x^{k+1})+\sum_{i\in\mathcal E}(\lambda^k_i+{\sigma_k}c_i(x^{k+1}))\nabla c_i(x^{k+1})+\sum_{i\in\mathcal I}(\mu^k_i+\sigma_k(c_i(x^{k+1})+s^{k+1}_i))\nabla c_i(x^{k+1})\to0,
 $$
 
-得到乘子更新方式
+简记 $$c(x)=(c_1(x),\dots,c_{\vert\mathcal E\vert}(x))^\top$$, $$c(x)+s=(c_1(x)+s_1,\dots,c_{\vert\mathcal I\vert}(x)+s_{\vert\mathcal I\vert})^\top$$, 上下两式对比可以得到增广拉格朗日函数法的迭代格式:
+
+{% include widgets/highlight_begin.html %}
+
+**增广拉格朗日函数法**
+
+给定初始点 $$x^0$$, 乘子 $$\lambda^0$$, $$\mu^0$$; 初始罚因子 $$\sigma_0>0$$, 罚因子更新常数 $$\rho>1$$; 令初始精度 $$\eta_0=\frac1{\sigma_0}$$, 终止精度 $$\eta>0$$; 初始违反度 $$\varepsilon_0=\frac1{\sigma^\alpha_0}$$, 终止约束违反度 $$\varepsilon>0$$, 以及更新常数 $$0\leqslant\alpha\leqslant\beta\leqslant1$$. 每一步迭代如下:
+
+- 使用无约束优化算法求解消去 $$s$$ 后的
+    
+    $$
+    x^{k+1}=\argmin_{x}L_{\sigma_k}(x;\lambda^k,\mu^k),
+    $$
+    
+    使得
+    
+    $$
+    \Vert L_{\sigma_k}(x^{k+1};\lambda^k,\mu^k)\Vert\leqslant\eta_k.
+    $$
+    
+- 令约束违反度
+    
+    $$
+    v_{k}=\left({\Vert c(x^{k+1})\Vert}^2+{\Vert c(x^{k+1})+s^{k+1}\Vert}^2\right)^\frac12,
+    $$
+    
+- 如果约束违反度 $$v_{k}>\varepsilon_k$$, 则更新罚因子, 精度和约束违反度 (约束偏差太大的情况):
+
+$$
+\begin{aligned}
+\lambda^{k+1}=&\lambda^k,\\
+\mu^{k+1}=&\mu^k,\\
+\sigma_{k+1}=&\rho\sigma_k,\\
+\eta_{k+1}=&\frac1{\sigma_{k+1}},\\
+\varepsilon_{k+1}=&\frac1{\sigma^\alpha_{k+1}},
+\end{aligned}
+$$
+
+- 否则, 如果约束违反度 $$v_{k}<\varepsilon$$ 且 $$\Vert L_{\sigma_k}(x^{k+1};\lambda^k,\mu^k)\Vert\leqslant\eta$$, 则终止迭代;
+- 否则, 更新乘子, 精度和约束违反度 (子问题精度不足, 比上边更快的降低精度和违反度):
 
 $$
 \begin{aligned}
 \lambda^{k+1}_i=&\lambda^k_i+\sigma_k c_i(x^{k+1}),\quad i\in\mathcal E,\\
 \mu^{k+1}_i=&\max\{\mu^k_i+\sigma_k c_i(x^{k+1}),0\},\quad i\in\mathcal I.\\
+\sigma_{k+1}=&\sigma_k,\\
+\eta_{k+1}=&\frac{\eta_k}{\sigma_{k+1}},\\
+\varepsilon_{k+1}=&\frac{\varepsilon_k}{\sigma^\beta_{k+1}}.
 \end{aligned}
 $$
 
+{% include widgets/highlight_end.html %}
+
+可以看出, 该算法通过对约束违反度和精度的比较, 自适应的选择对其中某一个进行更新.
+
+### 凸问题的增广拉格朗日函数法
+
+我们主要考虑如下的凸问题
+
+$$
+\begin{aligned}\min_{x\in\mathbb R^n}f(x),& \quad\text{s.t.}\\
+c_i(x)\leqslant0,&\quad i=1,2,\dots,m,\\
+\end{aligned}
+$$
+
+根据上节, 其增广拉格朗日函数为
+
+$$
+L_\sigma(x;\mu)=f(x)+\frac12\sigma\sum_{i\in\mathcal I}\left(\max\left\{\frac{\mu_i}{\sigma}+c_i(x),0\right\}^2-\frac{\mu_i^2}{\sigma^2}\right),
+$$
+
+其迭代过程如下:
+
+{% include widgets/highlight_begin.html %}
+
+**增广拉格朗日函数法**
+
+给定初始点 $$x^0$$, 乘子 $$\mu^0$$, 罚因子 $$\sigma_k>0$$, 每一步迭代如下:
+
+- 通过某些非精确凸优化算法求解
+    
+    $$
+    x^{k+1}=\argmin_{x}L_{\sigma_k}(x;\mu^k),
+    $$
+    
+- 更新乘子和罚因子
+
+$$
+\begin{aligned}
+\mu^{k+1}=&\max\{\mu^k+\sigma_k c(x^{k+1}),0\}.\\
+\end{aligned}
+$$
+
+{% include widgets/highlight_end.html %}
+
+## 对偶近似点梯度法
+
+下面我们主要考虑无约束凸问题
+
+$$
+\begin{aligned}\min_{x\in\mathbb R^n}f(x)+g(Ax),
+\end{aligned}
+$$
+
+或者等价的约束问题,
+
+$$
+\begin{aligned}\min_{x\in\mathbb R^n,y\in\mathbb R ^m}f(x)+g(y), \quad\text{s.t.}\quad
+Ax=y,\\
+\end{aligned}
+$$
+
+其中 $$f$$, $$g$$ 为适当的闭凸函数, $$A\in\mathbb R^{m\times n}$$. 对于约束凸问题而言, 我们可以考虑其对偶问题, 从而得到更好的性质. 其对偶问题为
+
+$$
+\begin{aligned}\max_{\lambda\in\mathbb R^m}-f^*(-A^\top \lambda)-g^*(-\lambda),
+\end{aligned}
+$$
+
+如果再假设 $$f$$ 是闭的强凸函数, 可以证明 $$f^*$$ 为可微函数, 对对偶问题做近似点梯度法, 得到对偶近似点梯度法:
+
+{% include widgets/highlight_begin.html %}
+
+**对偶近似点梯度法**
+
+其每一步迭代如下
+
+$$
+\lambda^{k+1}=\text{prox}_{tg^*}(\lambda^k+tA\nabla f^*(-A^\top\lambda^k)),
+$$
+
+令 $$x^k=\nabla f^*(-A^\top\lambda^k)$$, 并利用 Moreau 分解, 可以得到
+
+$$
+\begin{aligned}
+x^{k+1}=&\argmin_xL(x,y^k;\lambda^k),\\
+y^{k+1}=&\argmin_yL_t(x^{k+1},y;\lambda^k),\\
+\lambda^{k+1}=&\lambda^k+t(Ax^{k+1}-y^{k+1}).\\
+\end{aligned}
+$$
+
+其中 $$L$$, $$L_t$$ 为 Lagrange 和增广拉格朗日函数, $$t$$ 为一个常数 (罚因子).
+
+{% include widgets/highlight_end.html %}
+
+可以看出, 这个方法是一种交替极小化的方法, 与 ADMM 十分相似. 在某些问题上, 对偶近似点梯度法与增广拉格朗日函数法是相同的.
+
 ## 原始-对偶混合梯度 (PDHG) 法
 
-PDHG 方法主要用于求解等式约束的凸优化问题. 由于 Lagrange 函数是一个鞍函数, 可以将原问题转化为一个极小极大问题, 即对原变量求极小的同时对对偶变量求极大. PDHG 方法通过交替对原变量求极小和对偶变量求极大, 得到原问题的解.
+我们同样考虑上节的问题, 注意 PDHG 方法与线性规划的原始-对偶方法不同. 我们可以将 $$g$$ 写用其共轭函数表示, 来构造出一个极小极大问题:
+
+$$
+\begin{aligned}\min_{x\in\mathbb R^n}\max_{y\in\mathbb R ^m} f(x)-g^*(y)+\langle Ax,y\rangle,\\
+\end{aligned}
+$$
+
+分别对原始变量和对偶变量做近似点梯度法,
+
+{% include widgets/highlight_begin.html %}
+
+**原始-对偶混合梯度法**
+
+其每一步迭代如下
+
+$$
+\begin{aligned}
+y^{k+1}=&\text{prox}_{\delta_kg^*}(y^k+\delta_kAx^k),\\
+x^{k+1}=&\text{prox}_{\alpha_kf}(x^k+\alpha_kAz^{k+1}),\\
+\end{aligned}
+$$
+
+其中 $$\alpha_k$$, $$\delta_k$$ 分别为原始变量和对偶变量的更新步长, 上述过程是一个交替对对偶变量求极大和原始变量求极小的过程.
+
+{% include widgets/highlight_end.html %}
+
+由于上述函数是一个鞍函数, 可以将原问题转化为一个极小极大问题, 即对原变量求极小的同时对对偶变量求极大. PDHG 方法通过交替对原变量求极小和对偶变量求极大, 得到原问题的解.
 
 ## 交替方向乘子 (ADMM) 法
 
-交替方向乘子法主要用于求解等式约束的复合凸优化问题. 其通过对增广拉格朗日函数交替求极小而得到原问题的极小值. 该算法与上一个算法同样有交替求极小的过程, 不同的是 PDHG 针对的是 Lagrange 函数而 ADMM 针对增广拉格朗日函数.
+交替方向乘子法主要用于求解等式约束的凸优化问题:
+
+$$
+\begin{aligned}\min_{x_1\in\mathbb R^n,x_2\in\mathbb R^n}f_1(x_1)+f_2(x_2),\\
+\text{s.t.}\quad
+A_1x_1+A_2x_2=b.\\
+
+\end{aligned}
+$$
+
+其中 $$f_1$$, $$f_2$$ 为适当的闭凸函数, $$A_1\in\mathbb R^{m\times n}$$, $$A_2\in\mathbb R^{m\times n}$$. 这个问题可以看作上一节问题的推广. 如果使用增广拉格朗日函数法, 需要同时更新 $$x_1$$, $$x_2$$, 这通常是比较困难的. 可以通过交替更新这两个变量的方式, 来求解其最优解.
+
+{% include widgets/highlight_begin.html %}
+
+**交替方向乘子法**
+
+其每一步迭代如下
+
+$$
+\begin{aligned}
+x_1^{k+1}=&\argmin_xL_{\sigma}(x,x_2^k;\lambda^k),\\
+x_2^{k+1}=&\argmin_xL_{\sigma}(x_1^{k+1},x;\lambda^k),\\
+\lambda^{k+1}=&\lambda^k+\tau\sigma(A_1x_1^{k+1}+A_2x_2^{k+1}-b).\\
+\end{aligned}
+$$
+
+其中 $$L_\sigma$$ 为增广拉格朗日函数, $$\sigma$$ 为一个常数 (罚因子), $$\tau$$ 为步长.
+
+{% include widgets/highlight_end.html %}
+
+这个算法与对偶近似点梯度法同样有交替求极小的过程, 不同的是第一步对增广拉格朗日函数求最小值, 而 PDHG 针对的是 Lagrange 函数, 这样的优势是可以去掉强凸的条件.
+
+## 总结
+
+对于可微问题来说, 无约束情况主要使用梯度法和信赖域方法进行求解, 带约束的问题可以通过罚函数或增广拉格朗日函数转化为无约束问题进行求解. 对于凸问题而言, 由于凸问题有较好的对偶性, 无约束问题与约束问题可以相互转化, 原问题与对偶问题也是相互等价的, 近似点方法, 对偶近似点方法, PDHG 方法, ADMM 方法与增广拉格朗日函数法之间有密切的联系, 也是求解的主要方法. 而对于复合优化问题, 由于其中含有非光滑项, 导致梯度法无法使用, 因而主要使用近似点梯度法, BCD 算法等.
