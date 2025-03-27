@@ -2,31 +2,47 @@
 layout: default
 title : Publications
 navbar_title: Publications
-body_attr: >-
-  data-spy="scroll" data-target="#navbar-year" data-offset="100"
 ---
 
 {% assign pubs_by_year = site.publications | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
 
 <div class="row">
-    <div class="col-12 col-lg-10">
-        {% for year in pubs_by_year %}
-        {% assign num_papers = year.items | size %}
-        <h2 class="pt-4" id="year-{{ year.name }}">{{ year.name }}</h2>
-        <div class="my-0 p-0 bg-white shadow-sm rounded-sm">
-            {% for item in year.items %}
-                {% include widgets/publication_item.html item=item hide_bottom_border=forloop.last first=forloop.first last=forloop.last %}
-            {% endfor %}
-        </div>
-        {% endfor %}
-    </div>
-
-    <div class="col-2 d-none d-lg-block">
-        <div id="navbar-year" class="nav nav-pills flex-column sticky-top" style="top: 80px">
+    <div class="col-12 col-{{ site.data.display.list_width }}-10">
+        <div class="mt-5">
             {% for year in pubs_by_year %}
-            <a class="nav-link d-block" href="#year-{{ year.name }}">{{ year.name }}</a>
+            {% assign num_papers = year.items | size %}
+
+            <div class="card my-card border-0 mt-4 ml-2 mr-{{ site.data.display.list_width }}-0 mr-2">
+                <div class="card-body p-4">
+                    <div class="p-2">
+                        <div class="mb-2">
+                            <h4 class="mx-2 mt-1 pb-2 mb-2 separate-color" id="year-{{ year.name }}"> <i
+                                    class="fas fa-calendar-alt ico-color"></i>
+                                {{ year.name }}</h4>
+                            <div class="mx-2 mx-{{ site.data.display.mobile_width }}-3">
+                                {% for item in year.items %}
+                                {% include widgets/publication_item.html item=item hide_bottom_border=forloop.last
+                                first=forloop.first last=forloop.last %}
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
 
+    <div class="col-2 d-none d-{{ site.data.display.list_width }}-block">
+        <div id="navbar-year" class="nav flex-column navbar-year">
+            <div class="card my-card border-0 mr-2">
+                <div class="card-body p-4">
+                    {% for year in pubs_by_year %}
+                    <a class="nav-link d-block" href="#year-{{ year.name }}">{{ year.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

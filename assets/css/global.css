@@ -147,3 +147,22 @@ div.lazy {
 }
 
 #map { height: 300px; width: 100%; border-radius: 16px }
+
+.link-button {
+    background-color: var(--background-color);
+    border-radius: 8px;
+    color: var(--a-color);
+    padding: 0.2rem 0.5rem 0.25rem 0.5rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.link-button:hover {
+    background-color: var(--a-hover);
+    color: var(--background-color);
+}

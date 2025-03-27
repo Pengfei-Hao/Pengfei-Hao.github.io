@@ -62,6 +62,10 @@
     top: 7rem;
 }
 
+/* .navbar-year .nav-link.active {
+    color: red;
+} */
+
 @supports not (backdrop-filter: blur(10px)) {
     .glass-navbar {
         background: var(--nav-bar) !important;

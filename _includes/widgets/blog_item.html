@@ -14,7 +14,7 @@
         </div>
         <div style="flex: 1;">
             <h5 class="mt-1 mb-0"><a href="{{ item.link | prepend: '/blogs/' | relative_url }}">{{ item.title }}</a></h5>
-            <p class="mt-1 mb-0 mx-2">{% include widgets/author_list.html authors=item.authors %}</p>
+            <p class="mt-1 mb-0 mx-2">{% include widgets/author_list.html authors=item.authors bold=false %}</p>
 
             <p class="mt-0 mb-1 mx-1">{{ item.abstract }}</p>
         </div>
