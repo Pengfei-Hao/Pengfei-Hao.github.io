@@ -64,10 +64,6 @@
             return map.hasOwnProperty(value) ? map[value] : defaultValue;
         }
 
-        let urls = params.getAll('file');
-        let index = 0;
-        let url = urls[index] ?? '';
-
         const input = document.getElementById('video-input');
 
         const i18n = {
@@ -97,7 +93,9 @@
                 stereoNotification: 'Click anywhere to exit stereo view',
                 pleaseRotate: 'Please rotate your device',
                 tapToContinue: '(or tap to continue)',
-                openFile: 'Open file'
+                openFile: 'Open file',
+                password: 'Please enter password:',
+                wrong: 'Wrong password:'
             },
             'zh-CN': {
                 zoom: '缩放',
@@ -125,13 +123,73 @@
                 stereoNotification: '点击任意位置退出立体视图',
                 pleaseRotate: '请旋转你的设备',
                 tapToContinue: '（或点击继续）',
-                openFile: '打开文件'
+                openFile: '打开文件',
+                password: '请输入密码:',
+                wrong: '密码错误'
             }
         };
         let langName = navigator.language;
         langName = (getParam('lang') !== '') ? getParam('lang') : langName;
         langName = checkParam(langName, ['zh-CN', 'en-US'], 'en-US');
         let lang = i18n[langName];
+
+
+        let urls = params.getAll('file');
+        let index = 0;
+        let url = urls[index] ?? '';
+
+        async function verifyPassword(pwd) {
+            const cloud = 'https://cloud.haopf.cc/';
+            try {
+                const res = await fetch(cloud, {
+                    method: "POST",
+                    body: pwd
+                });
+                return res.status === 404 && await res.text() === 'File not found.';
+            }
+            catch (e) {
+                return false;
+            }
+        }
+
+        let useCloud = mapValue(getParam('cloud'), { "true": true, "false": false }, false);
+        let pwd = '';
+        if (useCloud) {
+            pwd = getParam('pwd');
+            let cancel = false;
+            if (pwd === '') {
+                pwd = prompt(lang.password);
+                if(pwd === null) {
+                    cancel = true;
+                    pwd = '';
+                }
+            }
+            while (!cancel && !await verifyPassword(pwd)) {
+                pwd = prompt(lang.wrong);
+                if(pwd === null) {
+                    pwd = '';
+                    break;
+                }
+            }
+        }
+
+        async function getRealUrl(file, pwd) {
+            const cloud = 'https://cloud.haopf.cc/';
+            let res;
+            try {
+                res = await fetch(cloud + file, {
+                    method: "POST",
+                    body: pwd
+                });
+            }
+            catch (e) {
+                return '';
+            }
+            if (!res.ok) {
+                return '';
+            }
+            return await res.text();
+        }
 
         let autoplay = mapValue(getParam('autoplay'), { "true": true, "false": false }, false);
         let muted = mapValue(getParam('muted'), { "true": true, "false": false }, false);
@@ -161,7 +219,7 @@
                 resolution: resolution,
             }),
             panorama: {
-                source: url,
+                source: useCloud ? await getRealUrl(url, pwd) : url,
             },
             description: getDescription(),
             minFov: 30,
@@ -197,6 +255,13 @@
             ],
         });
 
+        async function setPanorama() {
+            url = urls[index] ?? '';
+            viewer.setPanorama({
+                source: useCloud ? await getRealUrl(url, pwd) : url
+            });
+        }
+
         input.addEventListener('change', (e) => {
             urls = [];
             index = 0;
@@ -205,10 +270,9 @@
                     urls.push(URL.createObjectURL(file));
                 }
             }
+            useCloud = false;
             url = urls[index] ?? '';
-            viewer.setPanorama({
-                source: url
-            });
+            setPanorama();
             viewer.setOption('description', getDescription());
         });
 
@@ -227,10 +291,7 @@
             if (!changing && e.duration - e.time < delta) {
                 changing = true;
                 index = (index + 1 >= urls.length) ? 0 : index + 1;
-                url = urls[index] ?? '';
-                viewer.setPanorama({
-                    source: url
-                });
+                setPanorama();
             }
         });
 
