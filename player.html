@@ -52,6 +52,8 @@
         import { GyroscopePlugin } from '@photo-sphere-viewer/gyroscope-plugin';
         import { StereoPlugin } from '@photo-sphere-viewer/stereo-plugin';
 
+        // params
+
         const params = new URLSearchParams(window.location.search);
         function getParam(name) {
             return decodeURIComponent(params.get(name) ?? '');
@@ -59,12 +61,13 @@
         function checkParam(value, options, defaultValue) {
             return options.includes(value) ? value : defaultValue;
         }
-
         function mapValue(value, map, defaultValue) {
             return map.hasOwnProperty(value) ? map[value] : defaultValue;
         }
 
         const input = document.getElementById('video-input');
+
+        // lang
 
         const i18n = {
             'en-US': {
@@ -133,10 +136,15 @@
         langName = checkParam(langName, ['zh-CN', 'en-US'], 'en-US');
         let lang = i18n[langName];
 
+        // urls
 
         let urls = params.getAll('file');
+        if (urls.length === 0) {
+            urls = [''];
+        }
         let index = 0;
-        let url = urls[index] ?? '';
+
+        // useCloud, pwd
 
         async function verifyPassword(pwd) {
             const cloud = 'https://cloud.haopf.cc/';
@@ -151,7 +159,6 @@
                 return false;
             }
         }
-
         let useCloud = mapValue(getParam('cloud'), { "true": true, "false": false }, false);
         let pwd = '';
         if (useCloud) {
@@ -159,14 +166,14 @@
             let cancel = false;
             if (pwd === '') {
                 pwd = prompt(lang.password);
-                if(pwd === null) {
+                if (pwd === null) {
                     cancel = true;
                     pwd = '';
                 }
             }
             while (!cancel && !await verifyPassword(pwd)) {
                 pwd = prompt(lang.wrong);
-                if(pwd === null) {
+                if (pwd === null) {
                     pwd = '';
                     break;
                 }
@@ -191,9 +198,12 @@
             return await res.text();
         }
 
+        // autoplay, muted, resolution, shuffle
+
         let autoplay = mapValue(getParam('autoplay'), { "true": true, "false": false }, false);
         let muted = mapValue(getParam('muted'), { "true": true, "false": false }, false);
         let resolution = mapValue(getParam('res'), { "4": 4, "8": 8, "16": 16, "32": 32, "64": 64, "128": 128, "256": 256, "512": 512 }, 64);
+        let shuffle = mapValue(getParam('shuffle'), { "true": true, "false": false }, false);
 
         const defaultSource = '../assets/video/default.mp4';
 
@@ -201,25 +211,48 @@
             return `<p>Params:</p>
                 <p>Urls:</p>
                 <ul>
-                    ${urls.map(u => `<li><a href="${u}" target="_blank" rel="noopener noreferrer">${u}</a></li>`).join('')}
+                    ${urls.map((u, i) => `<li>${(i === index) ? '=>' : ''}<a href="#" onclick="setPanorama(${i}); return false;">${u}</a></li>`).join('')}
                 </ul>
                 <p>Language: ${langName}</p>
+                <p>Cloud: ${useCloud}</p>
                 <p>Autoplay: ${autoplay}</p>
                 <p>Muted: ${muted}</p>
+                <p>Shuffle: ${shuffle}</p>
                 <p>Resolution: ${resolution}</p>
                 <p>The parameters can be modified in the URL.</p>
                 <p style="text-align: right;">Player by Pengfei Hao</p>`;
+        }
+
+        function getVideo(url) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.crossOrigin = 'anonymous';
+            video.loop = false;
+            video.playsInline = true;
+            video.muted = true;
+            video.autoplay = false;
+            video.preload = 'auto';
+
+            video.addEventListener("ended", (e) => {
+                let i = shuffle ? (Math.floor(Math.random() * urls.length)) : ((index + 1 >= urls.length) ? 0 : index + 1);
+                if(i === index) {
+                    e.target.currentTime = 0;
+                }
+                setPanorama(i, true);
+            });
+
+            return video;
         }
 
         let viewer = new Viewer({
             container: 'viewer',
             adapter: EquirectangularVideoAdapter.withConfig({
                 muted: muted,
-                autoplay: autoplay,
+                autoplay: false,
                 resolution: resolution,
             }),
             panorama: {
-                source: useCloud ? await getRealUrl(url, pwd) : url,
+                source: getVideo(defaultSource),
             },
             description: getDescription(),
             minFov: 30,
@@ -255,45 +288,47 @@
             ],
         });
 
-        async function setPanorama() {
-            url = urls[index] ?? '';
-            viewer.setPanorama({
-                source: useCloud ? await getRealUrl(url, pwd) : url
-            });
+        window.setPanorama = async function (i, play = null) {
+            index = i;
+            let url = urls[index] ?? '';
+            viewer.setOption('description', getDescription());
+            try {
+                await viewer.setPanorama({
+                    source: getVideo(useCloud ? await getRealUrl(url, pwd) : url)
+                });
+                if (play !== null) {
+                    if (play === true) {
+                        viewer.getPlugin(VideoPlugin).play();
+                    }
+                    else {
+                        viewer.getPlugin(VideoPlugin).pause();
+                    }
+                }
+
+            }
+            catch (e) {
+                await viewer.setPanorama({
+                    source: getVideo(defaultSource)
+                });
+                viewer.getPlugin(VideoPlugin).pause();
+            }
         }
 
         input.addEventListener('change', (e) => {
             urls = [];
-            index = 0;
             for (let file of e.target.files) {
                 if (file) {
                     urls.push(URL.createObjectURL(file));
                 }
             }
+            if (urls.length === 0) {
+                urls = [''];
+            }
             useCloud = false;
-            url = urls[index] ?? '';
-            setPanorama();
-            viewer.setOption('description', getDescription());
+            setPanorama(shuffle ? (Math.floor(Math.random() * urls.length)) : 0);
         });
 
-        viewer.addEventListener(events.PanoramaErrorEvent.type, (e) => {
-            viewer.setPanorama({
-                source: defaultSource
-            });
-        });
-        const videoPlugin = viewer.getPlugin(VideoPlugin);
-        let changing = false;
-        videoPlugin.addEventListener("progress", (e) => {
-            const delta = 0.35; // min -> 0.269 s
-            if (changing && e.time < delta) {
-                changing = false;
-            }
-            if (!changing && e.duration - e.time < delta) {
-                changing = true;
-                index = (index + 1 >= urls.length) ? 0 : index + 1;
-                setPanorama();
-            }
-        });
+        await setPanorama(shuffle ? (Math.floor(Math.random() * urls.length)) : 0, autoplay ? true : null);
 
     </script>
 </body>
