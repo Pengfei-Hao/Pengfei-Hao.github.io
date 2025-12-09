@@ -325,7 +325,7 @@
                 urls = [''];
             }
             useCloud = false;
-            setPanorama(shuffle ? (Math.floor(Math.random() * urls.length)) : 0);
+            setPanorama(shuffle ? (Math.floor(Math.random() * urls.length)) : 0, autoplay ? true : null);
         });
 
         await setPanorama(shuffle ? (Math.floor(Math.random() * urls.length)) : 0, autoplay ? true : null);
