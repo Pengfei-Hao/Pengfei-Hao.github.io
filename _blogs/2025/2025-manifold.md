@@ -251,7 +251,7 @@ The **regular level set** is the level set of regular value $$c$$.
 
 {% include widgets/highlight_end.html %}
 
-Examples: The general linear group $$\text{GL}\left(n,\mathbb{R}\right)$$ is a $${n}^{2}$$ dimensional regular submanifold of $${\mathbb{R}}^{{n}^{2}}$$. The special linear group $$\text{SL}\left(n,\mathbb{R}\right)$$ is a $${n}^{2}-1$$ dimensional regular submanifold of general linear group $$\text{GL}\left(n,\mathbb{R}\right)$$, (let $$f\left(A\right)=\left|A\right|$$).
+Examples: The general linear group $$\text{GL}\left(n,\mathbb{R}\right)$$ is a $${n}^{2}$$ dimensional regular submanifold of $${\mathbb{R}}^{ {n}^{2}}$$. The special linear group $$\text{SL}\left(n,\mathbb{R}\right)$$ is a $${n}^{2}-1$$ dimensional regular submanifold of general linear group $$\text{GL}\left(n,\mathbb{R}\right)$$, (let $$f\left(A\right)=\left|A\right|$$).
 
 ## Rank of Manifold
 
