@@ -1,0 +1,278 @@
+---
+layout: default
+title: Cloud
+navbar_title: Cloud
+---
+
+<style>
+    .cloud-file-row {
+        gap: 1rem;
+    }
+
+    .cloud-file-name {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .cloud-status {
+        min-height: 1.5rem;
+    }
+</style>
+
+<div class="d-flex" style="justify-content: center;">
+    <div class="card border-0 my-card mt-5 mx-2 w-100" style="max-width: 760px;">
+        <div class="card-body p-4">
+            <div class="p-2">
+                <div class="mb-4">
+                    <h4 class="mt-1 pb-2 mb-3 separate-color">
+                        <i class="fas fa-cloud ico-color"></i>
+                        Cloud
+                    </h4>
+
+                    <div class="form-row align-items-center">
+                        <div class="col-12 col-md mb-2">
+                            <input id="cloud-password" class="form-control" type="password" autocomplete="current-password"
+                                placeholder="Password">
+                        </div>
+                        <div class="col-auto mb-2">
+                            <button id="cloud-login" class="btn btn-primary">
+                                <i class="fas fa-right-to-bracket"></i>
+                                Login
+                            </button>
+                        </div>
+                        <div class="col-auto mb-2">
+                            <button id="cloud-logout" class="btn btn-outline-secondary">
+                                <i class="fas fa-right-from-bracket"></i>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-row align-items-center">
+                        <div class="col-12 col-md mb-2">
+                            <input id="cloud-file" class="form-control-file" type="file" multiple>
+                        </div>
+                        <div class="col-auto mb-2">
+                            <button id="cloud-upload" class="btn btn-primary">
+                                <i class="fas fa-upload"></i>
+                                Upload
+                            </button>
+                        </div>
+                        <div class="col-auto mb-2">
+                            <button id="cloud-refresh" class="btn btn-outline-secondary">
+                                <i class="fas fa-list"></i>
+                                List
+                            </button>
+                        </div>
+                    </div>
+                    <div id="cloud-status" class="cloud-status muted-color small mt-2"></div>
+                </div>
+
+                <div id="cloud-list" class="mx-0"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (() => {
+        const apiRoot = "https://cloud.haopf.cc";
+        const passwordInput = document.getElementById("cloud-password");
+        const fileInput = document.getElementById("cloud-file");
+        const listEl = document.getElementById("cloud-list");
+        const statusEl = document.getElementById("cloud-status");
+
+        const setStatus = (message, isError = false) => {
+            statusEl.textContent = message;
+            statusEl.classList.toggle("text-danger", isError);
+            statusEl.classList.toggle("muted-color", !isError);
+        };
+
+        const keyPath = (key) => key.split("/").map(encodeURIComponent).join("/");
+
+        const endpoint = (key) => {
+            const path = key ? keyPath(key) : "";
+            const url = new URL(`${apiRoot}/${path}`);
+            url.searchParams.set("signedurl", "");
+            return url.toString();
+        };
+
+        const requestSignedUrl = async (type, key = "") => {
+            const response = await fetch(endpoint(key), {
+                method: "POST",
+                credentials: "include",
+                body: JSON.stringify({ type })
+            });
+            const text = await response.text();
+            if (!response.ok) {
+                throw new Error(text || `Request failed: ${response.status}`);
+            }
+            return text;
+        };
+
+        const parseList = (xmlText) => {
+            const doc = new DOMParser().parseFromString(xmlText, "application/xml");
+            if (doc.querySelector("parsererror")) {
+                throw new Error("Invalid list response.");
+            }
+            return Array.from(doc.querySelectorAll("Contents")).map((node) => ({
+                key: node.querySelector("Key")?.textContent || "",
+                size: Number(node.querySelector("Size")?.textContent || 0),
+                lastModified: node.querySelector("LastModified")?.textContent || ""
+            })).filter((item) => item.key);
+        };
+
+        const formatSize = (bytes) => {
+            if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+            const units = ["B", "KB", "MB", "GB"];
+            const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+            return `${(bytes / Math.pow(1024, index)).toFixed(index ? 1 : 0)} ${units[index]}`;
+        };
+
+        const renderList = (items) => {
+            if (!items.length) {
+                listEl.innerHTML = '<div class="muted-color py-3">No files.</div>';
+                return;
+            }
+            listEl.innerHTML = "";
+            items.forEach((item, index) => {
+                const row = document.createElement("div");
+                row.className = `cloud-file-row d-flex align-items-center py-2 ${index ? "border-top separate-color" : ""}`;
+
+                const link = document.createElement("a");
+                link.href = "#";
+                link.className = "cloud-file-name flex-grow-1";
+                link.textContent = item.key;
+                link.addEventListener("click", async (event) => {
+                    event.preventDefault();
+                    try {
+                        setStatus(`Downloading ${item.key}...`);
+                        const signedUrl = await requestSignedUrl("get", item.key);
+                        const anchor = document.createElement("a");
+                        anchor.href = signedUrl;
+                        anchor.download = item.key.split("/").pop() || item.key;
+                        document.body.appendChild(anchor);
+                        anchor.click();
+                        anchor.remove();
+                        setStatus("");
+                    } catch (error) {
+                        setStatus(error.message, true);
+                    }
+                });
+
+                const meta = document.createElement("span");
+                meta.className = "muted-color small no-break";
+                meta.textContent = formatSize(item.size);
+
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "btn btn-sm btn-outline-danger no-break";
+                button.innerHTML = '<i class="fas fa-trash"></i> Delete';
+                button.addEventListener("click", async () => {
+                    if (!confirm(`Delete ${item.key}?`)) return;
+                    try {
+                        setStatus(`Deleting ${item.key}...`);
+                        const signedUrl = await requestSignedUrl("delete", item.key);
+                        const response = await fetch(signedUrl, { method: "DELETE" });
+                        if (!response.ok) {
+                            throw new Error(await response.text() || `Delete failed: ${response.status}`);
+                        }
+                        await refreshList();
+                        setStatus("Deleted.");
+                    } catch (error) {
+                        setStatus(error.message, true);
+                    }
+                });
+
+                row.append(link, meta, button);
+                listEl.appendChild(row);
+            });
+        };
+
+        const refreshList = async () => {
+            setStatus("Loading list...");
+            const signedUrl = await requestSignedUrl("list");
+            const response = await fetch(signedUrl);
+            const text = await response.text();
+            if (!response.ok) {
+                throw new Error(text || `List failed: ${response.status}`);
+            }
+            renderList(parseList(text));
+            setStatus("");
+        };
+
+        document.getElementById("cloud-login").addEventListener("click", async () => {
+            const password = passwordInput.value;
+            try {
+                setStatus("Logging in...");
+                const response = await fetch(endpoint(""), {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify({ type: "login", password })
+                });
+                const text = await response.text();
+                if (!response.ok) {
+                    throw new Error(text || `Login failed: ${response.status}`);
+                }
+                passwordInput.value = "";
+                setStatus("Login successful.");
+                await refreshList();
+            } catch (error) {
+                setStatus(error.message, true);
+            }
+        });
+
+        document.getElementById("cloud-logout").addEventListener("click", async () => {
+            try {
+                setStatus("Logging out...");
+                await fetch(endpoint(""), {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify({ type: "logout" })
+                });
+            } finally {
+                passwordInput.value = "";
+                renderList([]);
+                setStatus("Logged out.");
+            }
+        });
+
+        document.getElementById("cloud-upload").addEventListener("click", async () => {
+            const files = Array.from(fileInput.files || []);
+            if (!files.length) {
+                setStatus("Choose a file first.", true);
+                return;
+            }
+            try {
+                for (const file of files) {
+                    setStatus(`Uploading ${file.name}...`);
+                    const signedUrl = await requestSignedUrl("put", file.name);
+                    const response = await fetch(signedUrl, {
+                        method: "PUT",
+                        body: file
+                    });
+                    if (!response.ok) {
+                        throw new Error(await response.text() || `Upload failed: ${response.status}`);
+                    }
+                }
+                fileInput.value = "";
+                await refreshList();
+                setStatus("Uploaded.");
+            } catch (error) {
+                setStatus(error.message, true);
+            }
+        });
+
+        document.getElementById("cloud-refresh").addEventListener("click", async () => {
+            try {
+                await refreshList();
+            } catch (error) {
+                setStatus(error.message, true);
+            }
+        });
+
+        refreshList().catch(() => setStatus(""));
+    })();
+</script>
