@@ -1,12 +1,15 @@
 @charset "utf-8";
 
 :root {
-    --primary: #1E88E5;       /* 主题蓝 (标题/强调) */
-    --secondary: #90CAF9;    /* 辅助蓝 (图标/边框) */
-    --background: #535557;   /* 背景白蓝 */
+    --primary: #1E88E5;
+    /* 主题蓝 (标题/强调) */
+    --secondary: #90CAF9;
+    /* 辅助蓝 (图标/边框) */
+    --background: #535557;
+    /* 背景白蓝 */
 
     --muted-color: #6c757d;
-    
+
     --a-color: #2196F3;
     --a-hover: #1976D2;
 
@@ -17,11 +20,14 @@
 
     --ico-color: #1E88E5;
 
-    --shadow-color: rgba(0, 0, 0, 0.1);   /* 导航栏边框 */
+    --danger-color: #dc3545;
+
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    /* 导航栏边框 */
     --separator-color: #dee2e6;
-  }
-  
-  @media (prefers-color-scheme: dark) {
+}
+
+@media (prefers-color-scheme: dark) {
     :root {
 
         --muted-color: #6c757d;
@@ -30,19 +36,19 @@
         --a-color: #64B5F6;
         --a-hover: #1976D2;
 
-      --card-color: #1E1E1E;
+        --card-color: #1E1E1E;
 
-      --font-color: #E0E0E0;
-      --background-color: #121212;
+        --font-color: #E0E0E0;
+        --background-color: #121212;
 
-      --shadow-color: rgba(117, 117, 117, 0.1);
-      --separator-color: #383838;
+        --shadow-color: rgba(117, 117, 117, 0.1);
+        --separator-color: #383838;
 
     }
-  }
+}
 
 
-  .ico-color {
+.ico-color {
     /* color: #1E88E5 */
     color: var(--ico-color);
 }
@@ -67,25 +73,154 @@ body {
 .my-figure {
     border-radius: 16px;
 }
+
 .my-card {
     background-color: var(--card-color);
     border-radius: 20px;
     box-shadow: 4px 4px 24px var(--shadow-color);
 }
 
+.my-form-control {
+    color: var(--text-color);
+    background-color: var(--card-color);
+    border-color: var(--separator-color);
+    border-radius: 8px;
+    padding: .5rem .75rem;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.my-form-control::placeholder {
+    color: var(--muted-color);
+}
+
+.my-form-control:focus {
+    color: var(--text-color);
+    background-color: var(--background-color);
+    border-color: var(--a-hover);
+    box-shadow: 0 0 0 0;
+}
+
+.my-button {
+    border-radius: 8px;
+    background-color: var(--a-hover);
+    color: var(--background-color);
+    padding: .5rem .75rem;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    border: 1px solid var(--a-hover);
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.my-button:hover {
+    background-color: var(--background-color);
+    color: var(--a-hover);
+}
+
+.my-button:active {
+    background-color: var(--background-color);
+    color: var(--a-hover);
+}
+
+.my-button-primary {
+    color: var(--a-hover);
+    background-color: var(--background-color);
+    border: 1px solid var(--a-hover);
+    border-color: var(--a-hover);
+    transition: all 0.3s ease;
+}
+
+.my-button-primary:hover {
+    color: var(--background-color);
+    background-color: var(--a-hover);
+    border-color: var(--a-hover);
+}
+
+.my-button-primary:active {
+    color: var(--background-color);
+    background-color: var(--a-hover);
+    border-color: var(--a-hover);
+}
+
+.my-button-primary:focus {
+    box-shadow: none;
+}
+
+.my-button-outline {
+    color: var(--muted-color);
+    background-color: var(--background-color);
+    border-color: var(--muted-color);
+    border: 1px solid var(--muted-color);
+    transition: all 0.3s ease;
+}
+
+.my-button-outline:hover {
+    color: var(--background-color);
+    background-color: var(--muted-color);
+    border-color: var(--muted-color);
+}
+
+.my-button-outline:active {
+    color: var(--background-color);
+    background-color: var(--muted-color);
+    border-color: var(--muted-color);
+}
+
+.my-button-outline:focus {
+    box-shadow: none;
+}
+
+
+.my-button-danger {
+    color: var(--danger-color);
+    background-color: var(--background-color);
+    border: 1px solid var(--danger-color);
+    border-color: var(--danger-color);
+    transition: all 0.3s ease;
+}
+
+.my-button-danger:hover {
+    color: var(--background-color);
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.my-button-danger:active {
+    color: var(--background-color);
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.my-button-danger:focus {
+    box-shadow: none;
+}
+
+
 a {
     color: var(--a-color);
     text-decoration: none;
     transition: color 0.3s ease;
-  }
-  
+}
+
 a:hover {
-    color: var(--a-hover); 
+    color: var(--a-hover);
     text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
     font-weight: 700;
 }
 
@@ -138,6 +273,10 @@ div.lazy {
     font-size: 100%;
 }
 
+.my-progress-bar {
+    background-color: var(--a-hover);
+}
+
 .email-text {
     font-family: Courier, monospace;
 }
@@ -146,7 +285,19 @@ div.lazy {
     color: var(--muted-color);
 }
 
-#map { height: 300px; width: 100%; border-radius: 16px }
+.danger-color {
+    color: var(--danger-color);
+}
+
+.bg-danger-color {
+    background-color: var(--danger-color);
+}
+
+#map {
+    height: 300px;
+    width: 100%;
+    border-radius: 16px
+}
 
 .link-button {
     background-color: var(--background-color);

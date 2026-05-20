@@ -5,8 +5,105 @@ navbar_title: Cloud
 ---
 
 <style>
+    .cloud-app-shell {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .cloud-app-shell>.col {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .cloud-login-shell {
+        min-height: 70vh;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cloud-login-shell>.col {
+        flex: 0 1 400px;
+        max-width: 400px;
+    }
+
+    .cloud-login-shell>.col>.mt-5 {
+        margin-top: 0 !important;
+        width: 100%;
+    }
+
+    .cloud-toolbar {
+        gap: 0.5rem;
+    }
+
+    .cloud-user-pill {
+        background-color: var(--background-color);
+        border-radius: 8px;
+        padding: 0.5rem 0.75rem;
+        font-size: 1.00rem;
+        font-weight: 600;
+        width: 100%;
+    }
+
+    .cloud-status-pill {
+        background-color: var(--background-color);
+        border-radius: 8px;
+        padding: 0.5rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 600;
+        width: 100%;
+    }
+
+    .cloud-action-group {
+        margin-right: 0;
+    }
+
+    .cloud-action-group .btn+.btn {
+        margin-left: -1px;
+    }
+
+    .cloud-action-group .btn:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .cloud-action-group .btn:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .cloud-square-btn {
+        min-width: 38px;
+        height: 38px;
+        padding: 0 0.6rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        border-radius: 8px;
+    }
+
+    .cloud-row-btn {
+        min-width: 32px;
+        height: 32px;
+        padding: 0 0.6rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        border-radius: 8px;
+    }
+
+    .cloud-status {
+        min-height: 1.5rem;
+    }
+
     .cloud-file-row {
-        gap: 1rem;
+        gap: 0.75rem;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        cursor: pointer;
     }
 
     .cloud-file-name {
@@ -14,67 +111,176 @@ navbar_title: Cloud
         overflow-wrap: anywhere;
     }
 
-    .cloud-status {
-        min-height: 1.5rem;
+    .cloud-file-row:hover {
+        background-color: var(--background-color);
+    }
+
+    .cloud-file-info {
+        min-width: 0;
+        align-items: center;
+    }
+
+    .cloud-file-disabled {
+        color: var(--muted-color);
+        cursor: default;
+    }
+
+    .cloud-row-actions {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .cloud-file-row:hover .cloud-row-actions,
+    .cloud-file-row:focus-within .cloud-row-actions {
+        opacity: 1;
+    }
+
+    .cloud-upload-row {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .cloud-upload-name {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        color: var(--font-color);
+        font-size: 0.9rem;
+    }
+
+    .cloud-progress-bar {
+        background-color: var(--background-color);
+    }
+
+    .cloud-upload-info {
+        /* color: var(--muted-color); */
+        font-size: 0.9rem;
     }
 </style>
 
-<div class="d-flex" style="justify-content: center;">
-    <div class="card border-0 my-card mt-5 mx-2 w-100" style="max-width: 760px;">
-        <div class="card-body p-4">
-            <div class="p-2">
-                <div class="mb-4">
-                    <h4 class="mt-1 pb-2 mb-3 separate-color">
-                        <i class="fas fa-cloud ico-color"></i>
-                        Cloud
-                    </h4>
+<div id="cloud-shell" class="cloud-login-shell row">
+    <div class="col">
+        <div class="mt-5">
+            <div class="card my-card border-0 mt-4 mx-2">
+                <div class="card-body p-4">
+                    <div class="p-2">
+                        <div class="mb-1">
+                            <h4 class="mx-2 mt-1 pb-2 mb-2 separate-color">
+                                <i class="fas fa-cloud ico-color"></i>
+                                Cloud
+                            </h4>
 
-                    <div class="form-row align-items-center">
-                        <div class="col-12 col-md mb-2">
-                            <input id="cloud-password" class="form-control" type="password"
-                                autocomplete="current-password" placeholder="Password">
-                        </div>
-                        <div class="col-auto mb-2">
-                            <button id="cloud-login" class="btn btn-primary">
-                                <i class="fas fa-right-to-bracket"></i>
-                                Login
-                            </button>
-                        </div>
-                        <div class="col-auto mb-2">
-                            <button id="cloud-logout" class="btn btn-outline-secondary">
-                                <i class="fas fa-right-from-bracket"></i>
-                                Logout
-                            </button>
+                            <div id="cloud-login-panel" class="mx-2 mx-{{ site.data.display.mobile_width }}-3">
+                                <h2 class="my-4">Login</h2>
+                                <div class="mb-3">
+                                    <input id="cloud-username" class="form-control my-form-control" type="text"
+                                        autocomplete="username" placeholder="Username">
+                                </div>
+                                <div class="mb-3">
+                                    <input id="cloud-password" class="form-control my-form-control" type="password"
+                                        autocomplete="current-password" placeholder="Password">
+                                </div>
+                                <div>
+                                    <button id="cloud-login" class="my-button">
+                                        <i class="fas fa-right-to-bracket"></i>
+                                        Login
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div id="cloud-main" class="mx-2 mx-{{ site.data.display.mobile_width }}-3 my-3 d-none">
+                                <div class="d-flex flex-wrap align-items-center cloud-toolbar">
+                                    <div
+                                        class="col-12 col-{{ site.data.display.mobile_width }}-auto mb-2 mb-{{ site.data.display.mobile_width }}-0 p-0 flex-grow-1">
+                                        <div class="cloud-user-pill d-flex align-items-center">
+                                            <i class="fas fa-user ico-color mr-3"></i>
+                                            <span id="cloud-user-info"></span>
+                                        </div>
+                                    </div>
+                                    <div id="cloud-upload-group" class="cloud-action-group">
+                                        <input id="cloud-file" class="d-none" type="file" multiple>
+                                        <div class="btn-group" role="group">
+                                            <button id="cloud-upload"
+                                                class="btn btn-primary my-button-primary cloud-square-btn d-none"
+                                                title="Upload">
+                                                <i class="fas fa-upload"></i>
+                                                <span
+                                                    class="d-none d-{{ site.data.display.list_width }}-inline">Upload</span>
+                                            </button>
+                                            <button id="cloud-copy-upload-curl"
+                                                class="btn btn-outline-secondary my-button-outline cloud-square-btn d-none"
+                                                title="Copy upload CLI command">
+                                                <i class="fas fa-terminal"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="cloud-download-group" class="cloud-action-group">
+                                        <div class="btn-group" role="group">
+                                            <button id="cloud-download-selected"
+                                                class="btn btn-outline-secondary my-button-outline cloud-square-btn d-none"
+                                                title="Download selected">
+                                                <i class="fas fa-download"></i>
+                                                <span
+                                                    class="d-none d-{{ site.data.display.list_width }}-inline">Download</span>
+                                            </button>
+                                            <button id="cloud-copy-download-curl"
+                                                class="btn btn-outline-secondary my-button-outline cloud-square-btn d-none"
+                                                title="Copy download CLI command">
+                                                <i class="fas fa-terminal"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="cloud-delete-group" class="cloud-action-group">
+                                        <div class="btn-group" role="group">
+                                            <button id="cloud-delete-selected"
+                                                class="btn btn-outline-danger my-button-danger cloud-square-btn d-none"
+                                                title="Delete selected">
+                                                <i class="fas fa-trash"></i>
+                                                <span
+                                                    class="d-none d-{{ site.data.display.list_width }}-inline">Delete</span>
+                                            </button>
+                                            <button id="cloud-copy-delete-curl"
+                                                class="btn btn-outline-secondary my-button-outline cloud-square-btn d-none"
+                                                title="Copy delete CLI command">
+                                                <i class="fas fa-terminal"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <button id="cloud-refresh"
+                                            class="btn btn-outline-secondary my-button-outline cloud-square-btn d-none"
+                                            title="Refresh">
+                                            <i class="fas fa-rotate-right"></i>
+                                            <span
+                                                class="d-none d-{{ site.data.display.mobile_width }}-inline">Refresh</span>
+                                        </button>
+                                    </div>
+                                    <div class="">
+                                        <button id="cloud-logout"
+                                            class="btn btn-outline-danger my-button-danger cloud-square-btn"
+                                            title="Logout">
+                                            <i class="fas fa-right-from-bracket"></i>
+                                            <span
+                                                class="d-none d-{{ site.data.display.mobile_width }}-inline">Logout</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="cloud-status"
+                                class="mx-2 mx-{{ site.data.display.mobile_width }}-3 cloud-status mt-3 d-none">
+                                <div class="cloud-status-pill d-flex align-items-center">
+                                    <i id="cloud-status-icon" class="fas fa-circle-info ico-color mr-3"></i>
+                                    <span id="cloud-status-text"></span>
+                                </div>
+                            </div>
+                            <div id="cloud-upload-list" class="mx-2 mx-{{ site.data.display.mobile_width }}-3 mt-3">
+                            </div>
+
+                            <div id="cloud-list" class="mx-2 mx-{{ site.data.display.mobile_width }}-3"></div>
                         </div>
                     </div>
                 </div>
-
-                <div class="mb-4">
-                    <div class="form-row align-items-center">
-                        <div class="col-12 col-md mb-2">
-                            <input id="cloud-file" class="form-control-file" type="file" multiple>
-                        </div>
-                        <div class="col-auto mb-2">
-                            <button id="cloud-upload" class="btn btn-primary">
-                                <i class="fas fa-upload"></i>
-                                Upload
-                            </button>
-                        </div>
-                        <div class="col-auto mb-2">
-                            <button id="cloud-refresh" class="btn btn-outline-secondary">
-                                <i class="fas fa-list"></i>
-                                List
-                            </button>
-                        </div>
-                    </div>
-                    <div id="cloud-status" class="cloud-status muted-color small mt-2"></div>
-                    <div id="cloud-progress" class="progress mt-2 d-none" style="height: 6px;">
-                        <div id="cloud-progress-bar" class="progress-bar" role="progressbar" style="width: 0%;"
-                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-
-                <div id="cloud-list" class="mx-0"></div>
             </div>
         </div>
     </div>
@@ -82,53 +288,224 @@ navbar_title: Cloud
 
 <script>
     (() => {
+        const MAX_PARALLEL_UPLOADS = 3;
         const apiRoot = "https://cloud.haopf.cc";
+        const shellEl = document.getElementById("cloud-shell");
+        const loginPanel = document.getElementById("cloud-login-panel");
+        const mainPanel = document.getElementById("cloud-main");
+        const userInfoEl = document.getElementById("cloud-user-info");
+        const usernameInput = document.getElementById("cloud-username");
         const passwordInput = document.getElementById("cloud-password");
         const fileInput = document.getElementById("cloud-file");
+        const uploadGroup = document.getElementById("cloud-upload-group");
+        const downloadGroup = document.getElementById("cloud-download-group");
+        const deleteGroup = document.getElementById("cloud-delete-group");
+        const uploadButton = document.getElementById("cloud-upload");
+        const copyUploadCurlButton = document.getElementById("cloud-copy-upload-curl");
+        const downloadSelectedButton = document.getElementById("cloud-download-selected");
+        const deleteSelectedButton = document.getElementById("cloud-delete-selected");
+        const copyDownloadCurlButton = document.getElementById("cloud-copy-download-curl");
+        const copyDeleteCurlButton = document.getElementById("cloud-copy-delete-curl");
+        const refreshButton = document.getElementById("cloud-refresh");
         const listEl = document.getElementById("cloud-list");
+        const uploadListEl = document.getElementById("cloud-upload-list");
         const statusEl = document.getElementById("cloud-status");
-        const progressEl = document.getElementById("cloud-progress");
-        const progressBarEl = document.getElementById("cloud-progress-bar");
+        const statusIconEl = document.getElementById("cloud-status-icon");
+        const statusTextEl = document.getElementById("cloud-status-text");
+
+        let userConfig = null;
+        let currentItems = [];
+        const selectedKeys = new Set();
 
         const setStatus = (message, isError = false) => {
-            statusEl.textContent = message;
-            statusEl.classList.toggle("text-danger", isError);
+            statusTextEl.textContent = message;
+            statusEl.classList.toggle("d-none", !message);
+            statusEl.classList.toggle("danger-color", isError);
             statusEl.classList.toggle("muted-color", !isError);
+            statusIconEl.className = `${isError ? "fas fa-circle-exclamation" : "fas fa-circle-info"} ${isError ? "danger-color" : "ico-color"} mr-3`;
         };
 
-        const setProgress = (percent) => {
-            const value = Math.max(0, Math.min(100, Math.round(percent)));
-            progressEl.classList.remove("d-none");
-            progressBarEl.style.width = `${value}%`;
-            progressBarEl.setAttribute("aria-valuenow", String(value));
+        const hasPermission = (permission) => {
+            return Boolean(userConfig) &&
+                Array.isArray(userConfig.permissions) &&
+                userConfig.permissions.includes(permission);
         };
 
-        const hideProgress = () => {
-            progressEl.classList.add("d-none");
-            progressBarEl.style.width = "0%";
-            progressBarEl.setAttribute("aria-valuenow", "0");
+        const showLogin = (message = "") => {
+            userConfig = null;
+            shellEl.classList.add("cloud-login-shell");
+            shellEl.classList.remove("cloud-app-shell");
+            loginPanel.classList.remove("d-none");
+            mainPanel.classList.add("d-none");
+            uploadGroup.classList.add("d-none");
+            downloadGroup.classList.add("d-none");
+            deleteGroup.classList.add("d-none");
+            uploadButton.classList.add("d-none");
+            refreshButton.classList.add("d-none");
+            passwordInput.value = "";
+            listEl.innerHTML = "";
+            uploadListEl.innerHTML = "";
+            selectedKeys.clear();
+            setStatus(message);
         };
 
-        const keyPath = (key) => key.split("/").map(encodeURIComponent).join("/");
+        const showCloud = () => {
+            shellEl.classList.remove("cloud-login-shell");
+            shellEl.classList.add("cloud-app-shell");
+            loginPanel.classList.add("d-none");
+            mainPanel.classList.remove("d-none");
+            uploadGroup.classList.toggle("d-none", !hasPermission("upload"));
+            downloadGroup.classList.toggle("d-none", !hasPermission("download"));
+            deleteGroup.classList.toggle("d-none", !hasPermission("delete"));
+            uploadButton.classList.toggle("d-none", !hasPermission("upload"));
+            copyUploadCurlButton.classList.toggle("d-none", !hasPermission("upload"));
+            refreshButton.classList.toggle("d-none", !hasPermission("preview"));
+            updateSelectionActions();
+            userInfoEl.textContent = [userConfig.username, userConfig.space].filter(Boolean).join(" / ") || "Cloud";
+        };
 
-        const endpoint = (key) => {
+        const updateSelectionActions = () => {
+            downloadSelectedButton.classList.toggle("d-none", !hasPermission("download"));
+            deleteSelectedButton.classList.toggle("d-none", !hasPermission("delete"));
+            copyDownloadCurlButton.classList.toggle("d-none", !hasPermission("download"));
+            copyDeleteCurlButton.classList.toggle("d-none", !hasPermission("delete"));
+        };
+
+        const handleAuthError = (error) => {
+            if (error.status === 401) {
+                showLogin("Session expired. Please log in again.");
+                return true;
+            }
+            return false;
+        };
+
+        const decodeKey = (key) => {
+            try {
+                return decodeURIComponent(key);
+            } catch (e) {
+                return key;
+            }
+        };
+
+        const keyPath = (key) => key.split("/").map((part) => {
+            try {
+                return encodeURIComponent(decodeURIComponent(part));
+            } catch (e) {
+                return encodeURIComponent(part);
+            }
+        }).join("/");
+
+        const endpoint = (method, key = "") => {
             const path = key ? keyPath(key) : "";
             const url = new URL(`${apiRoot}/${path}`);
-            url.searchParams.set("signedurl", "");
+            url.searchParams.set("method", method);
             return url.toString();
         };
 
-        const requestSignedUrl = async (type, key = "") => {
-            const response = await fetch(endpoint(key), {
-                method: "POST",
-                credentials: "include",
-                body: JSON.stringify({ type })
-            });
-            const text = await response.text();
-            if (!response.ok) {
-                throw new Error(text || `Request failed: ${response.status}`);
+        const requestText = (method, url, options = {}) => new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.withCredentials = Boolean(options.withCredentials);
+            if (options.responseType) {
+                xhr.responseType = options.responseType;
             }
-            return text;
+            if (options.onUploadProgress) {
+                xhr.upload.onloadstart = () => options.onUploadProgress(0, true);
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        options.onUploadProgress(Math.round((event.loaded / event.total) * 100), true, event.loaded, event.total);
+                    } else {
+                        options.onUploadProgress(null, false, event.loaded, event.total);
+                    }
+                };
+                xhr.upload.onload = () => options.onUploadProgress(100, true, null, null);
+            }
+            xhr.onload = () => {
+                const body = xhr.responseType ? xhr.response : xhr.responseText;
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    resolve(body);
+                } else {
+                    let message = `Request failed: ${xhr.status}`;
+                    try {
+                        message = xhr.responseText || message;
+                    } catch (e) {
+                    }
+                    const error = new Error(message);
+                    error.status = xhr.status;
+                    reject(error);
+                }
+            };
+            xhr.onerror = () => reject(new Error("Network request failed."));
+            xhr.send(options.body ?? null);
+        });
+
+        const workerPost = (method, key = "", body = {}) => {
+            return requestText("POST", endpoint(method, key), {
+                withCredentials: true,
+                body: JSON.stringify(body)
+            });
+        };
+
+        const copyText = async (text) => {
+            if (navigator.clipboard?.writeText) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    return;
+                } catch (error) {
+                }
+            }
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            const copied = document.execCommand("copy");
+            textarea.remove();
+            if (!copied) {
+                prompt("Copy CLI command", text);
+            }
+        };
+
+        const shellQuote = (value) => `'${String(value).replace(/'/g, "'\\''")}'`;
+
+        const selectedItems = () => currentItems.filter((item) => selectedKeys.has(item.key));
+
+        const requireSelectedItems = () => {
+            const items = selectedItems();
+            if (!items.length) {
+                setStatus("Select at least one file.", true);
+            }
+            return items;
+        };
+
+        const runLimited = async (tasks, limit) => {
+            const results = [];
+            let next = 0;
+            const workers = Array.from({ length: Math.min(limit, tasks.length) }, async () => {
+                while (next < tasks.length) {
+                    const index = next;
+                    next += 1;
+                    results[index] = await tasks[index]();
+                }
+            });
+            await Promise.all(workers);
+            return results;
+        };
+
+        const loadConfig = async () => {
+            const text = await workerPost("config");
+            userConfig = JSON.parse(text);
+            if (!userConfig || !Array.isArray(userConfig.permissions)) {
+                throw new Error("Invalid config response.");
+            }
+            showCloud();
+            try {
+                await refreshList();
+            } catch (error) {
+                if (!handleAuthError(error)) setStatus(error.message, true);
+            }
         };
 
         const parseList = (xmlText) => {
@@ -136,11 +513,17 @@ navbar_title: Cloud
             if (doc.querySelector("parsererror")) {
                 throw new Error("Invalid list response.");
             }
-            return Array.from(doc.querySelectorAll("Contents")).map((node) => ({
-                key: node.querySelector("Key")?.textContent || "",
-                size: Number(node.querySelector("Size")?.textContent || 0),
-                lastModified: node.querySelector("LastModified")?.textContent || ""
-            })).filter((item) => item.key);
+            return Array.from(doc.querySelectorAll("Contents")).map((node) => {
+                const storageKey = node.querySelector("Key")?.textContent || "";
+                const key = storageKey.replace(/^[^/]+\//, "");
+                return {
+                    key,
+                    name: decodeKey(key),
+                    storageKey,
+                    size: Number(node.querySelector("Size")?.textContent || 0),
+                    lastModified: node.querySelector("LastModified")?.textContent || ""
+                };
+            }).filter((item) => item.key);
         };
 
         const formatSize = (bytes) => {
@@ -150,42 +533,190 @@ navbar_title: Cloud
             return `${(bytes / Math.pow(1024, index)).toFixed(index ? 1 : 0)} ${units[index]}`;
         };
 
+        const formatSpeed = (bytesPerSecond) => {
+            return `${formatSize(bytesPerSecond)}/s`;
+        };
+
         const downloadFile = async (item) => {
-            setStatus(`Downloading ${item.key}...`);
-            const signedUrl = await requestSignedUrl("get", item.key);
+            setStatus(`Downloading ${item.name}...`);
+            const signedUrl = await workerPost("get", item.key);
             const anchor = document.createElement("a");
             anchor.href = signedUrl;
-            anchor.download = item.key.split("/").pop() || item.key;
+            anchor.download = item.name.split("/").pop() || item.name;
             document.body.appendChild(anchor);
             anchor.click();
             anchor.remove();
             setStatus("");
         };
 
-        const uploadFile = (signedUrl, file, onProgress) => new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.open("PUT", signedUrl);
-            xhr.upload.onloadstart = () => onProgress(0, true);
-            xhr.upload.onprogress = (event) => {
-                if (event.lengthComputable) {
-                    onProgress(Math.round((event.loaded / event.total) * 100), true);
-                } else {
-                    onProgress(null, false);
-                }
-            };
-            xhr.upload.onload = () => onProgress(100, true);
-            xhr.onload = () => {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    resolve();
-                } else {
-                    reject(new Error(xhr.responseText || `Upload failed: ${xhr.status}`));
-                }
-            };
-            xhr.onerror = () => reject(new Error("Upload failed."));
-            xhr.send(file);
+        const previewFile = async (item) => {
+            setStatus(`Opening ${item.name}...`);
+            const previewWindow = window.open("about:blank", "_blank", "noopener");
+            const signedUrl = await workerPost("get", item.key);
+            const blob = await requestText("GET", signedUrl, { responseType: "blob" });
+            const objectUrl = URL.createObjectURL(blob);
+            if (previewWindow) {
+                previewWindow.location.href = objectUrl;
+            } else {
+                window.open(objectUrl, "_blank", "noopener");
+            }
+            window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60 * 1000);
+            setStatus("");
+        };
+
+        const uploadFile = (signedUrl, file, onProgress) => requestText("PUT", signedUrl, {
+            body: file,
+            onUploadProgress: onProgress
         });
 
+        const createUploadRow = (file) => {
+            const row = document.createElement("div");
+            row.className = "py-2 cloud-upload-row";
+
+            const header = document.createElement("div");
+            header.className = "d-flex align-items-center mb-1";
+
+            const name = document.createElement("span");
+            name.className = "cloud-upload-name flex-grow-1";
+            name.textContent = file.name;
+
+            const percent = document.createElement("span");
+            percent.className = "cloud-upload-info muted-color no-break ml-2";
+            percent.textContent = "0%";
+
+            const progress = document.createElement("div");
+            progress.className = "progress cloud-progress-bar";
+            progress.style.height = "6px";
+
+            const bar = document.createElement("div");
+            bar.className = "progress-bar my-progress-bar";
+            bar.style.width = "0%";
+            bar.setAttribute("role", "progressbar");
+            bar.setAttribute("aria-valuenow", "0");
+            bar.setAttribute("aria-valuemin", "0");
+            bar.setAttribute("aria-valuemax", "100");
+
+            progress.appendChild(bar);
+            header.append(name, percent);
+            row.append(header, progress);
+            uploadListEl.appendChild(row);
+            let lastLoaded = 0;
+            let lastTime = performance.now();
+            let lastSpeedText = "";
+
+            return {
+                done: () => row.remove(),
+                error: (message) => {
+                    bar.classList.add("bg-danger-color");
+                    percent.classList.remove("muted-color");
+                    percent.classList.add("danger-color");
+                    percent.textContent = message;
+                },
+                progress: (value, hasPercent, loaded) => {
+                    let speedText = "";
+                    if (Number.isFinite(loaded)) {
+                        const now = performance.now();
+                        const seconds = (now - lastTime) / 1000;
+                        if (seconds > 0.2 && loaded >= lastLoaded) {
+                            lastSpeedText = `${formatSpeed((loaded - lastLoaded) / seconds)}`;
+                            lastLoaded = loaded;
+                            lastTime = now;
+                        }
+                        speedText = lastSpeedText;
+                    }
+                    if (!hasPercent) {
+                        percent.textContent = `Uploading... ${speedText}`;
+                        return;
+                    }
+                    speedText += " - ";
+                    const safeValue = Math.max(0, Math.min(100, Math.round(value)));
+                    bar.style.width = `${safeValue}%`;
+                    bar.setAttribute("aria-valuenow", String(safeValue));
+                    percent.textContent = `${speedText}${safeValue}%`;
+                }
+            };
+        };
+
+        const uploadFiles = async (files) => {
+            if (!files.length) return;
+            uploadListEl.innerHTML = "";
+            setStatus(`Uploading ${files.length} file${files.length > 1 ? "s" : ""}...`);
+            const tasks = files.map((file) => async () => {
+                const progress = createUploadRow(file);
+                try {
+                    const signedUrl = await workerPost("put", encodeURIComponent(file.name));
+                    await uploadFile(signedUrl, file, progress.progress);
+                    progress.done();
+                    if (hasPermission("preview")) {
+                        await refreshList(true);
+                    }
+                    return { ok: true };
+                } catch (error) {
+                    progress.error("Failed");
+                    return { ok: false, error };
+                }
+            });
+            const results = await runLimited(tasks, MAX_PARALLEL_UPLOADS);
+            const failures = results.filter((result) => !result.ok);
+            if (failures.length) {
+                const error = failures[0].error;
+                if (!handleAuthError(error)) {
+                    setStatus(`${failures.length} upload${failures.length > 1 ? "s" : ""} failed.`, true);
+                }
+            } else {
+                setStatus("Uploaded.");
+            }
+        };
+
+        const deleteItems = async (items) => {
+            if (!items.length) return;
+            setStatus(`Deleting ${items.length} file${items.length > 1 ? "s" : ""}...`);
+            for (const item of items) {
+                const signedUrl = await workerPost("delete", item.key);
+                await requestText("DELETE", signedUrl);
+                selectedKeys.delete(item.key);
+            }
+            await refreshList();
+            setStatus("Deleted.");
+        };
+
+        const copyDownloadCommands = async (items) => {
+            if (!items.length) return;
+            const commands = [];
+            for (const item of items) {
+                const signedUrl = await workerPost("get", item.key);
+                const filename = item.name.split("/").pop() || item.name;
+                commands.push(`curl -L ${shellQuote(signedUrl)} -o ${shellQuote(filename)}`);
+            }
+            await copyText(commands.join("\n"));
+            setStatus("Copied download CLI command.");
+        };
+
+        const copyUploadCommand = async (fileName) => {
+            const signedUrl = await workerPost("put", encodeURIComponent(fileName));
+            await copyText(`curl -T ${shellQuote(fileName)} ${shellQuote(signedUrl)}`);
+            setStatus("Copied upload CLI command.");
+        };
+
+        const copyDeleteCommands = async (items) => {
+            if (!items.length) return;
+            const commands = [];
+            for (const item of items) {
+                const signedUrl = await workerPost("delete", item.key);
+                commands.push(`curl -X DELETE ${shellQuote(signedUrl)}`);
+            }
+            await copyText(commands.join("\n"));
+            setStatus("Copied delete CLI command.");
+        };
+
         const renderList = (items) => {
+            currentItems = items;
+            for (const key of Array.from(selectedKeys)) {
+                if (!items.some((item) => item.key === key)) {
+                    selectedKeys.delete(key);
+                }
+            }
+            updateSelectionActions();
             if (!items.length) {
                 listEl.innerHTML = '<div class="muted-color py-3">No files.</div>';
                 return;
@@ -193,127 +724,227 @@ navbar_title: Cloud
             listEl.innerHTML = "";
             items.forEach((item, index) => {
                 const row = document.createElement("div");
-                row.className = `cloud-file-row d-flex align-items-center py-2 ${index ? "border-top separate-color" : ""}`;
+                row.className = "cloud-file-row d-flex align-items-center py-2";
+                // if (index) {
+                //     row.style.borderTop = "1px solid var(--separator-color)";
+                // }
 
-                const link = document.createElement("a");
-                link.href = "#";
-                link.className = "cloud-file-name flex-grow-1";
-                link.textContent = item.key;
-                link.addEventListener("click", async (event) => {
-                    event.preventDefault();
-                    try {
-                        await downloadFile(item);
-                    } catch (error) {
-                        setStatus(error.message, true);
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = selectedKeys.has(item.key);
+                checkbox.setAttribute("aria-label", `Select ${item.name}`);
+                checkbox.addEventListener("change", () => {
+                    if (checkbox.checked) {
+                        selectedKeys.add(item.key);
+                    } else {
+                        selectedKeys.delete(item.key);
                     }
+                    updateSelectionActions();
                 });
+                row.addEventListener("click", (event) => {
+                    if (event.target.closest("a, button, input")) {
+                        return;
+                    }
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event("change"));
+                });
+                row.appendChild(checkbox);
+
+                const fileInfo = document.createElement("div");
+                fileInfo.className = "cloud-file-info flex-grow-1 d-flex";
+
+                let link;
+                if (hasPermission("download")) {
+                    link = document.createElement("a");
+                    link.href = "#";
+                    link.className = "cloud-file-name";
+                    link.textContent = item.name;
+                    link.addEventListener("click", async (event) => {
+                        event.preventDefault();
+                        try {
+                            await previewFile(item);
+                        } catch (error) {
+                            if (!handleAuthError(error)) setStatus(error.message, true);
+                        }
+                    });
+                } else {
+                    link = document.createElement("span");
+                    link.className = "cloud-file-name cloud-file-disabled";
+                    link.textContent = item.name;
+                }
 
                 const meta = document.createElement("span");
-                meta.className = "muted-color small no-break";
+                meta.className = "muted-color small no-break ml-2";
                 meta.textContent = formatSize(item.size);
+                fileInfo.append(link, meta);
 
-                const button = document.createElement("button");
-                button.type = "button";
-                button.className = "btn btn-sm btn-outline-danger no-break";
-                button.innerHTML = '<i class="fas fa-trash"></i> Delete';
-                button.addEventListener("click", async () => {
-                    if (!confirm(`Delete ${item.key}?`)) return;
-                    try {
-                        setStatus(`Deleting ${item.key}...`);
-                        const signedUrl = await requestSignedUrl("delete", item.key);
-                        const response = await fetch(signedUrl, { method: "DELETE" });
-                        if (!response.ok) {
-                            throw new Error(await response.text() || `Delete failed: ${response.status}`);
+                row.appendChild(fileInfo);
+
+                const actions = document.createElement("div");
+                actions.className = "cloud-row-actions d-flex align-items-center";
+
+                if (hasPermission("download")) {
+                    const downloadButton = document.createElement("button");
+                    downloadButton.type = "button";
+                    downloadButton.className = "btn btn-sm btn-outline-secondary my-button-outline cloud-row-btn no-break";
+                    downloadButton.title = "Download";
+                    downloadButton.innerHTML = '<i class="fas fa-download"></i><span class="d-none d-md-inline">Download</span>';
+                    downloadButton.addEventListener("click", async () => {
+                        try {
+                            await downloadFile(item);
+                        } catch (error) {
+                            if (!handleAuthError(error)) setStatus(error.message, true);
                         }
-                        await refreshList();
-                        setStatus("Deleted.");
-                    } catch (error) {
-                        setStatus(error.message, true);
-                    }
-                });
+                    });
+                    actions.appendChild(downloadButton);
+                }
 
-                row.append(link, meta, button);
+                if (hasPermission("delete")) {
+                    const deleteButton = document.createElement("button");
+                    deleteButton.type = "button";
+                    deleteButton.className = "btn btn-sm btn-outline-danger my-button-danger cloud-row-btn no-break ml-1";
+                    deleteButton.title = "Delete";
+                    deleteButton.innerHTML = '<i class="fas fa-trash"></i><span class="d-none d-md-inline">Delete</span>';
+                    deleteButton.addEventListener("click", async () => {
+                        if (!confirm(`Delete ${item.name}?`)) return;
+                        try {
+                            setStatus(`Deleting ${item.name}...`);
+                            const signedUrl = await workerPost("delete", item.key);
+                            await requestText("DELETE", signedUrl);
+                            await refreshList();
+                            setStatus("Deleted.");
+                        } catch (error) {
+                            if (!handleAuthError(error)) setStatus(error.message, true);
+                        }
+                    });
+                    actions.appendChild(deleteButton);
+                }
+                row.appendChild(actions);
                 listEl.appendChild(row);
             });
         };
 
-        const refreshList = async () => {
-            setStatus("Loading list...");
-            const signedUrl = await requestSignedUrl("list");
-            const response = await fetch(signedUrl);
-            const text = await response.text();
-            if (!response.ok) {
-                throw new Error(text || `List failed: ${response.status}`);
+        const refreshList = async (silent = false) => {
+            if (!hasPermission("preview")) {
+                renderList([]);
+                if (!silent) setStatus("No preview permission.");
+                return;
             }
+            if (!silent) setStatus("Loading list...");
+            const signedUrl = await workerPost("list");
+            const text = await requestText("GET", signedUrl);
             renderList(parseList(text));
-            setStatus("");
+            if (!silent) setStatus("");
         };
 
         document.getElementById("cloud-login").addEventListener("click", async () => {
+            const username = usernameInput.value;
             const password = passwordInput.value;
             try {
                 setStatus("Logging in...");
-                const response = await fetch(endpoint(""), {
-                    method: "POST",
-                    credentials: "include",
-                    body: JSON.stringify({ type: "login", password })
-                });
-                const text = await response.text();
-                if (!response.ok) {
-                    throw new Error(text || `Login failed: ${response.status}`);
-                }
+                await workerPost("login", "", { username, password });
                 passwordInput.value = "";
-                setStatus("Login successful.");
-                await refreshList();
+                await loadConfig();
             } catch (error) {
                 setStatus(error.message, true);
             }
+        });
+
+        [usernameInput, passwordInput].forEach((input) => {
+            input.addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("cloud-login").click();
+                }
+            });
         });
 
         document.getElementById("cloud-logout").addEventListener("click", async () => {
             try {
                 setStatus("Logging out...");
-                await fetch(endpoint(""), {
-                    method: "POST",
-                    credentials: "include",
-                    body: JSON.stringify({ type: "logout" })
-                });
+                await workerPost("logout");
+            } catch (error) {
+                // Local state should still be cleared if the session is already gone.
             } finally {
                 passwordInput.value = "";
                 renderList([]);
-                setStatus("Logged out.");
+                showLogin("Logged out.");
             }
         });
 
         document.getElementById("cloud-upload").addEventListener("click", async () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener("change", async () => {
             const files = Array.from(fileInput.files || []);
             if (!files.length) {
-                setStatus("Choose a file first.", true);
+                return;
+            }
+            if (!hasPermission("upload")) {
+                fileInput.value = "";
+                setStatus("No upload permission.", true);
                 return;
             }
             try {
-                hideProgress();
-                for (const [index, file] of files.entries()) {
-                    const label = files.length > 1 ? `${index + 1}/${files.length} ${file.name}` : file.name;
-                    setStatus(`Uploading ${label}: 0%`);
-                    setProgress(0);
-                    const signedUrl = await requestSignedUrl("put", file.name);
-                    await uploadFile(signedUrl, file, (percent, hasPercent) => {
-                        if (hasPercent) {
-                            setProgress(percent);
-                            setStatus(`Uploading ${label}: ${percent}%`);
-                        } else {
-                            setStatus(`Uploading ${label}...`);
-                        }
-                    });
-                }
+                await uploadFiles(files);
                 fileInput.value = "";
-                await refreshList();
-                setStatus("Uploaded.");
-                hideProgress();
             } catch (error) {
-                hideProgress();
-                setStatus(error.message, true);
+                fileInput.value = "";
+                if (!handleAuthError(error)) setStatus(error.message, true);
+            }
+        });
+
+        document.getElementById("cloud-copy-upload-curl").addEventListener("click", async () => {
+            const fileName = prompt("Remote file name for upload CLI command");
+            if (!fileName) return;
+            try {
+                await copyUploadCommand(fileName);
+            } catch (error) {
+                if (!handleAuthError(error)) setStatus(error.message, true);
+            }
+        });
+
+        document.getElementById("cloud-download-selected").addEventListener("click", async () => {
+            const items = requireSelectedItems();
+            if (!items.length) return;
+            try {
+                for (const item of items) {
+                    await downloadFile(item);
+                }
+            } catch (error) {
+                if (!handleAuthError(error)) setStatus(error.message, true);
+            }
+        });
+
+        document.getElementById("cloud-delete-selected").addEventListener("click", async () => {
+            const items = requireSelectedItems();
+            if (!items.length) return;
+            if (!confirm(`Delete ${items.length} selected file${items.length > 1 ? "s" : ""}?`)) return;
+            try {
+                await deleteItems(items);
+            } catch (error) {
+                if (!handleAuthError(error)) setStatus(error.message, true);
+            }
+        });
+
+        document.getElementById("cloud-copy-download-curl").addEventListener("click", async () => {
+            const items = requireSelectedItems();
+            if (!items.length) return;
+            try {
+                await copyDownloadCommands(items);
+            } catch (error) {
+                if (!handleAuthError(error)) setStatus(error.message, true);
+            }
+        });
+
+        document.getElementById("cloud-copy-delete-curl").addEventListener("click", async () => {
+            const items = requireSelectedItems();
+            if (!items.length) return;
+            try {
+                await copyDeleteCommands(items);
+            } catch (error) {
+                if (!handleAuthError(error)) setStatus(error.message, true);
             }
         });
 
@@ -321,10 +952,10 @@ navbar_title: Cloud
             try {
                 await refreshList();
             } catch (error) {
-                setStatus(error.message, true);
+                if (!handleAuthError(error)) setStatus(error.message, true);
             }
         });
 
-        refreshList().catch(() => setStatus(""));
+        loadConfig().catch(() => showLogin(""));
     })();
 </script>
