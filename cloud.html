@@ -359,7 +359,7 @@ navbar_title: Cloud
             deleteGroup.classList.toggle("d-none", !hasPermission("delete"));
             uploadButton.classList.toggle("d-none", !hasPermission("upload"));
             copyUploadCurlButton.classList.toggle("d-none", !hasPermission("upload"));
-            refreshButton.classList.toggle("d-none", !hasPermission("preview"));
+            refreshButton.classList.toggle("d-none", !hasPermission("browse"));
             updateSelectionActions();
             userInfoEl.textContent = [userConfig.username, userConfig.space].filter(Boolean).join(" / ") || "Cloud";
         };
@@ -540,27 +540,14 @@ navbar_title: Cloud
         const downloadFile = async (item) => {
             setStatus(`Downloading ${item.name}...`);
             const signedUrl = await workerPost("get", item.key);
-            const anchor = document.createElement("a");
-            anchor.href = signedUrl;
-            anchor.download = item.name.split("/").pop() || item.name;
-            document.body.appendChild(anchor);
-            anchor.click();
-            anchor.remove();
+            window.open(signedUrl, "_blank", "noopener");
             setStatus("");
         };
 
         const previewFile = async (item) => {
             setStatus(`Opening ${item.name}...`);
-            const previewWindow = window.open("about:blank", "_blank", "noopener");
-            const signedUrl = await workerPost("get", item.key);
-            const blob = await requestText("GET", signedUrl, { responseType: "blob" });
-            const objectUrl = URL.createObjectURL(blob);
-            if (previewWindow) {
-                previewWindow.location.href = objectUrl;
-            } else {
-                window.open(objectUrl, "_blank", "noopener");
-            }
-            window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60 * 1000);
+            const signedUrl = await workerPost("open", item.key);
+            window.open(signedUrl, "_blank", "noopener");
             setStatus("");
         };
 
@@ -647,7 +634,7 @@ navbar_title: Cloud
                     const signedUrl = await workerPost("put", encodeURIComponent(file.name));
                     await uploadFile(signedUrl, file, progress.progress);
                     progress.done();
-                    if (hasPermission("preview")) {
+                    if (hasPermission("browse")) {
                         await refreshList(true);
                     }
                     return { ok: true };
@@ -825,9 +812,9 @@ navbar_title: Cloud
         };
 
         const refreshList = async (silent = false) => {
-            if (!hasPermission("preview")) {
+            if (!hasPermission("browse")) {
                 renderList([]);
-                if (!silent) setStatus("No preview permission.");
+                if (!silent) setStatus("No browse permission.");
                 return;
             }
             if (!silent) setStatus("Loading list...");
